@@ -8,9 +8,9 @@
 
 ## Imports ####################################################################
 
-library(getopt)
-library(NucDyn)
-library(plyr)
+suppressPackageStartupMessages(library(getopt))
+suppressPackageStartupMessages(library(NucDyn))
+suppressPackageStartupMessages(library(plyr))
 
 where <- function () {
     spath <- parent.frame(2)$ofile

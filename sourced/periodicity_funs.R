@@ -2,8 +2,8 @@
 
 ## Imports ####################################################################
 
-library(IRanges)
-library(parallel)
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(parallel))
 
 source(paste(SOURCE.DIR,
              "helperfuns.R",

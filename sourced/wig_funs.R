@@ -2,7 +2,7 @@
 
 ## Imports ####################################################################
 
-library(IRanges)
+suppressPackageStartupMessages(library(IRanges))
 source(paste(SOURCE.DIR, "get_genes.R", sep="/"))
 
 ## Binary paths ###############################################################

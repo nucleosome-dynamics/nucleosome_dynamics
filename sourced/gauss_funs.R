@@ -2,8 +2,8 @@
 
 ###############################################################################
 
-library(IRanges)
-library(plyr)
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(plyr))
 
 ###############################################################################
 

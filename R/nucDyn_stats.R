@@ -2,12 +2,12 @@
 
 ## Imports ####################################################################
 
-library(getopt)
-library(htSeqTools)
-library(nucleR)
-library(IRanges)
-library(GenomicRanges)
-library(ggplot2)
+suppressPackageStartupMessages(library(getopt))
+suppressPackageStartupMessages(library(htSeqTools))
+suppressPackageStartupMessages(library(nucleR))
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(GenomicRanges))
+suppressPackageStartupMessages(library(ggplot2))
 
 where <- function () {
     spath <-parent.frame(2)$ofile

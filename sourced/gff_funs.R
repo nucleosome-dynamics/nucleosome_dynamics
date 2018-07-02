@@ -2,8 +2,8 @@
 
 # Functions to read, parse and write files in the gff format
 
-library(IRanges)
-library(GenomicRanges)
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(GenomicRanges))
 
 rd2df <- function (rd)
 {   # Convert a RangedData into a data.frame to ease later conversion into

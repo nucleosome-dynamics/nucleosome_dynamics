@@ -3,10 +3,10 @@
 
 ## Imports ####################################################################
 
-library(getopt)
-library(IRanges)
-library(GenomicRanges)
-library(ggplot2)
+suppressPackageStartupMessages(library(getopt))
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(GenomicRanges))
+suppressPackageStartupMessages(library(ggplot2))
 
 where <- function () {
     spath <-parent.frame(2)$ofile

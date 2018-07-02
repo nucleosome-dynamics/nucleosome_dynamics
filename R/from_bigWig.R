@@ -2,8 +2,8 @@
 
 ## Imports ####################################################################
 
-library(getopt)
-library(IRanges)
+suppressPackageStartupMessages(library(getopt))
+suppressPackageStartupMessages(library(IRanges))
 
 where <- function () {
     spath <-parent.frame(2)$ofile

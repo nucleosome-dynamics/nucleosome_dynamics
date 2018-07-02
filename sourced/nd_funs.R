@@ -2,9 +2,9 @@
 
 ###############################################################################
 
-library(IRanges)
-library(nucleR)
-library(htSeqTools)
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(nucleR))
+suppressPackageStartupMessages(library(htSeqTools))
 
 source(paste(SOURCE.DIR,
              "fp.R",

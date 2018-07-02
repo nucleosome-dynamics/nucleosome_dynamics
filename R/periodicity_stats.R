@@ -3,9 +3,9 @@
 
 ## Imports ####################################################################
 
-library(getopt)
-library(IRanges)
-library(GenomicRanges)
+suppressPackageStartupMessages(library(getopt))
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(GenomicRanges))
 
 where <- function () {
     spath <-parent.frame(2)$ofile

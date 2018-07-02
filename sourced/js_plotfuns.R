@@ -1,10 +1,10 @@
 #!/usr/bin/Rscript
 
-library(ggplot2)
-library(IRanges)
-library(plotly)
-library(plyr)
-library(reshape2)
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(plotly))
+suppressPackageStartupMessages(library(plyr))
+suppressPackageStartupMessages(library(reshape2))
 
 dyadPos <- function(ran)
     # Find the center points of an IRanges
