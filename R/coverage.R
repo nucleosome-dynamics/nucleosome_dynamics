@@ -1,13 +1,11 @@
 #!/usr/bin/Rscript
 
 ## Imports ####################################################################
-
-library(getopt)
-library(htSeqTools)
-library(nucleR)
-library(IRanges)
-library(GenomicRanges)
-
+suppressPackageStartupMessages(library(getopt))
+suppressPackageStartupMessages(library(htSeqTools))
+suppressPackageStartupMessages(library(nucleR))
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(GenomicRanges))
 where <- function () {
     spath <-parent.frame(2)$ofile
 

@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-library(IRanges)
+suppressPackageStartupMessages(library(IRanges))
 
 makePlot <- function(dyn, plot.start, plot.end)
 {   # Given an already subsetted dynamic, and its start and end, plot it

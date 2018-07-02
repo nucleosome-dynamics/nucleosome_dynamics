@@ -7,12 +7,12 @@
 
 ## Imports ####################################################################
 
-library(IRanges)
-library(parallel)
-library(getopt)
-library(plyr)
-library(nucleR)
-library(htSeqTools)
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(parallel))
+suppressPackageStartupMessages(library(getopt))
+suppressPackageStartupMessages(library(plyr))
+suppressPackageStartupMessages(library(nucleR))
+suppressPackageStartupMessages(library(htSeqTools))
 
 where <- function () {
     spath <-parent.frame(2)$ofile

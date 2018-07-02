@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-library(IRanges)
+suppressPackageStartupMessages(library(IRanges))
 
 subsetDyn <- function(dyn, plot.chr, plot.start, plot.end)
 {   # This function is intended to be used as a helper to select a

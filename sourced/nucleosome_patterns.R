@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-library(plyr)
+suppressPackageStartupMessages(library(plyr))
 source(paste(SOURCE.DIR,
              "helperfuns.R",
              sep="/"))

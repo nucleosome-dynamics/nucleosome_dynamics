@@ -2,8 +2,8 @@
 
 # Miscelanious helper functions
 
-library(IRanges)
-library(GenomicRanges)
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(GenomicRanges))
 
 source(paste(SOURCE.DIR, "fp.R", sep="/"))
 

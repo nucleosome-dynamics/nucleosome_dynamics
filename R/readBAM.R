@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-library(getopt)
+suppressPackageStartupMessages(library(getopt))
 
 where <- function () {
     spath <-parent.frame(2)$ofile

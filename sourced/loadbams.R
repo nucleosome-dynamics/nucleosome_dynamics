@@ -3,9 +3,9 @@
 # Functions to load reads from a BAM file.
 # Can process either single-end or paired-end experiments
 
-library(IRanges)
-library(GenomicRanges)
-library(Rsamtools)
+suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(GenomicRanges))
+suppressPackageStartupMessages(library(Rsamtools))
 
 source(paste(SOURCE.DIR, "helperfuns.R", sep="/"))
 
