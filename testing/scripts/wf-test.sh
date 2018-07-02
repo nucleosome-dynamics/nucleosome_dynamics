@@ -3,15 +3,15 @@
 # PATH to Rscript program
 RSCRIPT=/usr/bin/Rscript
 # PATH to the root of Nucleosome Dynamics package
-NDDIR=/home/gelpi/DEVEL/NuclDynamics/distpkg
+NDDIR=/home/gelpi/DEVEL/NuclDynamics/source/distpkg
 # PATH to reference genome data
 PUBLICDIR=/home/gelpi/DEVEL/NuclDynamics/public_dir
 
 #running readBAM (bin)
-/usr/bin/Rscript $NDDIR/R/readBAM.R --input input/cellcycleG2_chrII.bam --output gcellcycleG2_chrII.RData --type paired 
+/usr/bin/Rscript $NDDIR/R/readBAM.R --input input/cellcycleG2_chrII.bam --output cellcycleG2_chrII.RData --type paired 
 #==============================================================
 #running readBAM (bin)
-/usr/bin/Rscript $NDDIR/R/readBAM.R --input input/cellcycleM_chrII.bam --output gcellcycleM_chrII.RData --type paired
+/usr/bin/Rscript $NDDIR/R/readBAM.R --input input/cellcycleM_chrII.bam --output cellcycleM_chrII.RData --type paired
 #==============================================================
 #running nucleR (bin)
 /usr/bin/Rscript $NDDIR/R/nucleR.R --input cellcycleG2_chrII.RData --output NR_cellcycleG2_chrII.gff --type paired --width 147 --minoverlap 80 --dyad_length 50 --thresholdPercentage 35 --hthresh 0.4 --wthresh 0.6 --pcKeepComp 0.02

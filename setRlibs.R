@@ -1,0 +1,8 @@
+source("https://bioconductor.org/biocLite.R")
+biocLite('dplyr')
+biocLite('IRanges')
+biocLite('GenomicRanges')
+biocLite('ShortRead')
+biocLite('doParallel')
+biocLite('ggplot2')
+biocLite('magrittr')
