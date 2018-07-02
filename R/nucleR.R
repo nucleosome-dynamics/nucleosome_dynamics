@@ -171,7 +171,8 @@ peaks <- peakDetection(fft,
                        width     = params$width,
                        threshold = threshold,
                        score     = FALSE,
-                       min.cov   = 0, 
+                       # Remove for back compatilibity
+                       #min.cov   = 0, 
                        mc.cores  = params$mc.cores)
 
 message("scoring peaks")
