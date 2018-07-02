@@ -28,8 +28,8 @@ spec <- matrix(c("type",   "t", 1, "character",
                ncol=4)
 args <- getopt(spec)
 
-print("-- loading ", args[["input"]])
+cat("-- loading ", args[["input"]],"\n")
 reads <- loadBAM(args[["input"]], args[["type"]])
 
-print("-- saving ", args[["output"]])
+cat("-- saving ", args[["output"]],"\n")
 save(reads, file=args[["output"]])

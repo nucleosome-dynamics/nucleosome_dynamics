@@ -42,7 +42,7 @@ params <- getopt(spec)
 
 ## Read genes #################################################################
 
-print("-- loading used genome")
+cat("-- loading reference genome\n")
 genes <- getGenes(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
@@ -54,7 +54,7 @@ genes_gr <- GRanges(genes$chrom,
 
 ## Statistics per gene ########################################################
 
-print("-- computing statistics per gene")
+cat("-- computing statistics per gene\n")
 nd <- readGff(params$input)
 
 if (nrow(nd) > 0) {
@@ -99,7 +99,7 @@ write.table(stat_nd,
 ## Statistics genome-wide  ####################################################
 
 #--- Mean and std.dev ---
-print("-- computing statistics genome-wide")
+cat("-- computing statistics genome-wide\n")
 
 nd_tab <- table(nd$class) / sum(table(nd$class))
 df <- as.data.frame(nd_tab)

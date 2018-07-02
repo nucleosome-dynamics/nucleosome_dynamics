@@ -38,7 +38,7 @@ checkInF <- function(f)
 
 makePlotable <- function(dyn)
 {
-    print("building structure to be saved for future plotting")
+    cat("building structure to be saved for future plotting\n")
 
     useful.types <- c("originals", "right.shifts", "left.shifts", "indels")
     chrs <- unique(unlist(lapply(seqnames(set.a(dyn)), levels)))

@@ -42,7 +42,7 @@ params <- getopt(spec)
 
 ## Read genes #################################################################
 
-print("-- loading used genome")
+cat("-- loading used genome\n")
 genes <- getGenes(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
@@ -50,7 +50,7 @@ genes$tts <- as.numeric(genes$tts)
 
 ## Statistics per gene ########################################################
 
-print("-- computing statistics per gene")
+cat("-- computing statistics per gene\n")
 tss <- readGff(params$input)
 
 genes_out <- tss[, c("id", "classification", "distance")]
@@ -71,7 +71,7 @@ write.table(genes_out,
 
 ## Statistics genome-wide  ####################################################
 
-print("-- computing statistics genome-wide")
+cat("-- computing statistics genome-wide\n")
 
 #--- Plot 1 ---
 

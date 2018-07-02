@@ -29,7 +29,7 @@ loadSingleBam <- function (exp)
 
 processStrand <- function (strand, bam)
 {
-    print(sprintf("processing strand %s", strand))
+    cat(sprintf("processing strand %s\n", strand))
 
     p1 <- ifelse(strand == "+", 99, 163)
     p2 <- ifelse(strand == "+", 147, 83)
@@ -65,7 +65,7 @@ processStrand <- function (strand, bam)
 loadPairedBam <- function (file)
 {
     # Read BAM file (only one access to disk, intended for Shared Memory)
-    print(sprintf("reading file %s", file))
+    cat(sprintf("reading file %s\n", file))
 
     what <- c("qname",
               "flag",
@@ -77,7 +77,7 @@ loadPairedBam <- function (file)
               "mpos")
     bam <- as.data.frame(scanBam(file=file, param=ScanBamParam(what=what))[[1]])
 
-    print("processing flags")
+    cat("processing flags\n")
     ## We will process the flags in R
     ## (an alternative is multiple scanBam calls...)
     bam$flag <- bam$flag %% 256

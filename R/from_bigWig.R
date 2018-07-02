@@ -38,7 +38,7 @@ cover <- readBigWig(args$input)
 
 ## Save as an RData ###########################################################
 
-print("string output as RData")
+cat("string output as RData\n")
 save(cover, file=args[["output"]])
 
 ###############################################################################

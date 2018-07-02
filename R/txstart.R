@@ -68,7 +68,7 @@ for (i in names(args)) {
 
 ## Some function declarations #################################################
 
-print("-- loading inputs")
+cat("-- loading inputs\n")
 nucs <- with(readGff(params$calls),
              RangedData(ranges  = IRanges(start = as.numeric(start),
                                           end   = as.numeric(end)),
@@ -81,7 +81,7 @@ nucs <- with(readGff(params$calls),
 
 ## Read input #################################################################
 
-print("-- loading used genome")
+cat("-- loading reference genome\n")
 genes <- getGenes(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
@@ -89,7 +89,7 @@ genes$tts <- as.numeric(genes$tts)
 
 ## Do it ######################################################################
 
-print("-- checking the classes")
+cat("-- checking the classes\n")
 tx.classes <- with(params,
                    patternsByChrDF(calls             = nucs,
                                    df                = genes,
@@ -116,7 +116,7 @@ names(tx.classes)[names(tx.classes) == "chrom"] <- "seqname"
 names(tx.classes)[names(tx.classes) == "pos"] <- "TSS_position"
 #names(tx.classes)[names(tx.classes) == "id"] <- "gene_id"
 
-print("-- saving gff output")
+cat("-- saving gff output\n")
 gff <- df2gff(tx.classes,
               source="nucleR",
               feature="TSS classification")

@@ -10,11 +10,11 @@ for (x in paste0(SOURCE.DIR, "/", sourced, ".R")) {
 ###############################################################################
 
 genomeFile <- function (genome)
-    sprintf("/orozco/services/Rdata/Web/refGenomes/%s/genes.gff",
+    sprintf("/public_dir/refGenomes/%s/genes.gff",
             genome)
 
 chromSizesFile <- function (genome)
-    sprintf("/orozco/services/Rdata/Web/refGenomes/%s/%s.fa.chrom.sizes",
+    sprintf("/public_dir/refGenomes/%s/%s.fa.chrom.sizes",
             genome,
             genome)
 

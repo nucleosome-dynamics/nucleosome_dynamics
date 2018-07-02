@@ -39,7 +39,7 @@ params <- getopt(spec)
 
 ## Read genes #################################################################
 
-print("-- loading used genome")
+cat("-- loading reference genome\n")
 genes <- getGenes(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
@@ -51,7 +51,7 @@ genes_gr <- GRanges(genes$chrom,
 
 ## Statistics per gene ########################################################
 
-print("-- computing statistics per gene")
+cat("-- computing statistics per gene\n")
 nuc <- readGff(params$input)
 
 nuc_gr <- GRanges(nuc$seqname,
@@ -90,7 +90,7 @@ write.table(genes_out,
 
 ## Statistics genome-wide  ####################################################
 
-print("-- computing statistics genome-wide")
+cat("-- computing statistics genome-wide\n")
 nuc_gr$class = as.character(nuc_gr$class)
 class_lab = gsub("F", "Fuzzy", nuc_gr$class)
 class_lab = gsub("W", "Well-positioned", class_lab)

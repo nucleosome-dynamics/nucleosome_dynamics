@@ -84,11 +84,11 @@ for (i in names(args)) {
 
 range <- parseRange(params$range)
 
-print("loading and subsetting reads")
+cat("loading and subsetting reads\n")
 rs <- lapply(params[c("input1", "input2")], function(x) get(load(x)))
 rs <- lapply(rs, subsetReads, range$chr, range$start, range$end)
 
-print("running NucleosomeDynamics")
+cat("running NucleosomeDynamics\n")
 dyn <- nucleosomeDynamics(setA      = rs[[1]],
                           setB      = rs[[2]],
                           maxLen    = params$maxLen,
@@ -102,7 +102,7 @@ if (!is.null(params$plotRData)) {
     save(plotable, file=params$plotRData)
 }
 
-print("finding hotspots")
+cat("finding hotspots\n")
 hs <- findHotspots(dyn=dyn, mc.cores=params$cores)
 
 ## Calculate vector of -log10(p-value)s  ######################################
@@ -136,17 +136,17 @@ names(hs)[names(hs) == "type"] <- "class"
 names(hs)[names(hs) == "chr"] <- "seqname"
 hs$peak <- NULL
 
-print("saving output as gff")
+cat("saving output as gff\n")
 writeGff(df2gff(hs,
                 source="NucleosomeDynamics",
                 feature="Nucleosome change"),
          params$outputGff)
 
-print("saving bigWig output")
+cat("saving bigWig output\n")
 writeBigWig(lapply(pvals, splitAtZeros),
             params$outputBigWig,
             params$genome)
 
-print("done")
+cat("done\n")
 
 ###############################################################################

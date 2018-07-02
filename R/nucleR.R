@@ -113,11 +113,11 @@ if (params$threshold) {
 
 ## Pipeline Itself ############################################################
 
-print("loading data")
+cat("loading data\n")
 reads <- get(load(params$input))
 reads <- RangedData(reads$ranges, space  = droplevels(reads$space))
 
-print("filtering duplicated reads")
+cat("filtering duplicated reads\n")
 f.reads <- filterDuplReads(reads,
                            fdrOverAmp = params$fdrOverAmp,
                            components = params$components,
@@ -125,7 +125,7 @@ f.reads <- filterDuplReads(reads,
 
 if (is.null(params$fragmentLen)) {
     if (params$type == "single") {
-        print("estimating fragment length")
+        cat("estimating fragment length\n")
         params$fragmentLen <- fragmentLenDetect(f.reads)
     } else if (params$type == "paired") {
         params$fragmentLen <- 170
@@ -142,13 +142,13 @@ if (!is.null(params$chr)) {
     }
 }
 
-print("processing reads")
+cat("processing reads\n")
 prep <- processReads(f.reads,
                      type        = params$type,
                      fragmentLen = params$fragmentLen,
                      trim        = params$trim)
 
-print("calculating coverage")
+cat("calculating coverage\n")
 cover <- coverage.rpm(prep)
 
 emptyHandler <- function (f)
@@ -159,14 +159,14 @@ emptyHandler <- function (f)
             numeric()
         }
 
-print("filtering with filterFFT")
+cat("filtering with filterFFT\n")
 fft <- mclapply(cover,
                 emptyHandler(filterFFT),
                 pcKeepComp     = params$pcKeepComp,
                 mc.preschedule = FALSE,
                 mc.cores       = params$mc.cores)
 
-print("detecting peaks")
+cat("detecting peaks\n")
 peaks <- peakDetection(fft,
                        width     = params$width,
                        threshold = threshold,
@@ -175,14 +175,14 @@ peaks <- peakDetection(fft,
                        #min.cov   = 0, 
                        mc.cores  = params$mc.cores)
 
-print("scoring peaks")
+cat("scoring peaks\n")
 scores <- peakScoring(peaks,
                       fft,
                       threshold   = threshold,
                       dyad.length = params$dyad_length,
                       mc.cores    = params$mc.cores)
 
-print("merging peaks")
+cat("merging peaks\n")
 merged <- mergeCalls(scores,
                      min.overlap = params$min.overlap,
                      mc.cores    = params$mc.cores)
@@ -200,12 +200,12 @@ names(merged)[names(merged) == "score_h"] <- "score_height"
 names(merged)[names(merged) == "score_w"] <- "score_width"
 merged$nmerge <- NULL
 
-print("saving output as gff")
+cat("saving output as gff\n")
 writeGff(df2gff(merged,
                 source  = "nucleR",
                 feature = "Nucleosome"),
          params$output)
 
-print("done")
+cat("done\n")
 
 ###############################################################################
