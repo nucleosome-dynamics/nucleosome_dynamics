@@ -1,0 +1,3 @@
+txstart_stats:    TSS and TTS statistics
+Usage: $op --input {gff} --genome {gff} --out_genes {csv} --out_gw {png} --out_gw2 {png}
+

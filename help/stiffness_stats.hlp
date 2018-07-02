@@ -1,0 +1,3 @@
+gaussfitting_stats: Statistics on stiffness
+Usage: $op -input {gff} --genome {gff} --out_genes {csv} --out_gw {csv} --out_gw2 {png}
+

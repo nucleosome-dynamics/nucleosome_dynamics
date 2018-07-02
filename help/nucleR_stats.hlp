@@ -1,0 +1,3 @@
+nucleR_stats:     Nucleosome call statistics
+Usage: $op --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
+

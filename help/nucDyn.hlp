@@ -1,0 +1,74 @@
+Nucleosome Dynamics is a method that allows comparison of two diferent MNase-seq experiments (Condition 1 and Condition 2) and detects local changes like:
+
+    Upstream shifts, were the occupancy is shifted upstream on Condition 2 relative to Condition 1.
+    Downstream shifts, were the occupancy is shifted downstream on Condition 2 relative to Condition 1.
+    Inclusions, where the nucleosome occupancy is significantly increased.
+    Evictions, where the nucleosome occupancy is significantly decreased.
+
+Nucleosome Dynamics tries to identify those changes by working at a read-level. The way its pipeline works is by sequentially pairing reads of one experiment with reads of the second experiment and setting those paired reads apart.
+
+First, all reads that are identical on both experiments are separated. Then, the reads that either start or end at the same position are separated as well. Next, the reads from one experiment whose range is completely contained by the range of a read in the other experiment, are paired and separated too.
+This first pairing, account for either differences in MNase digestion or for no differences at all, so after removing those, what's left accounts for differences.
+
+Nucleosome Dynamics then pairs reads from one experiment to reads in the other experiment whose center is slightly shifted either upstream or downstream relative to each other. In an attempt to find the best possible combination of pairs, a dynamic programming algorithm is used.
+The dynamic programming algorithm is set so that:
+
+    The most number of pairs possible is found.
+    The centers of the paired reads are as close as possible.
+    Reads whose center is futher apart than 74 bp. are never paired.
+
+To achieve that, the dynamic programming algorithm works the following way:
+
+    Gaps are highly penalized (to achieve maximum number of pairs).
+    Pairs are given a score that is inversely proportional to the centers distance (to prioratize close pairs).
+    Centers distance bigger than 74 bp. are given a score of -Infinity so that it can never happen.
+
+Usage: (runNuclDyn | docker run nucldyn) NucDyn --input1 {RData} --input2 {RData} --outputGff {gff} --outputBigWig {bw} --plotRData {RData} --genome {chrom.sizes} --range (All|chr|chr:start-end) [--maxDiff (int, 74)] [--maxLen (int, 170)] --shift_min_nreads [int, 3] --shift_threshold [float, 0.1] --indel_min_nreads [int, 3] --indel_threshold [float, 0.05] --cores [int, 1] --equal_size [logical, FALSE] --readSize [int, 140] --roundPow [logical] --same_magnitude [logical]
+
+Parameters:
+--input1, --input2
+  Input BAM's from MNase-seq in RData format (from readBAM)
+
+--outputGff 
+  Output of NucleosomeDynamics in GFF format. Annotations: nreads: Number of reads in that hotspot. class: Type of movement. It can be any of the following:  SHIFT +: Shift downstream (to the right), SHIFT -: Shift upstream (to the left), INCLUSION: Significant increase in coverage, EVICTION: Sigfniciant decrease in coverage.
+
+--outputBigWig {bw}  
+  Output of NucleosomeDynamics in BigWig format: -log10 of the p-value of the significance of the differences found. 
+
+--plotRData {RData} 
+
+--genome {chrom.sizes} 
+  Chromosome sizes from reference Genome (two column (chromosome id lenght) file)
+
+--range (All|chr|chr:start-end)
+  Genomic range to be analyzed. All: all chromosomes; chr: a Whole chromosome; chr:start-end: a specific region given the coordinates
+
+--maxDiff 
+  Maximum distance between the centers of two fragments for them to be paired as shifts. (bp) Optional,default 74bp
+  
+--maxLen
+  This value is used in a preliminar filtering. Fragments longer than this will be filtered out, since they are likely the result of MNase under-digestion and represent two or more nucleosomes. (bp) Optional, default 170bp 
+
+--shift_min_nreads
+  Minimum number of shifted reads for a shift hostspot to be reported (int), optional, default 3
+
+--shift_threshold 
+  Threshold applied to the shift hostpots. Only hotspots with a score better than the value will be reported. Notice the score has to be lower than the threshold, since these numbers represent p-values. Optional, default 0.1
+
+--indel_min_nreads 
+  Minimum number of shifted reads for an indel hostspot to be reported (int), optional, default 3
+
+--indel_threshold [float, 0.05] 
+  Threshold applied to the indel hostpots. Only hotspots with a score better than the value will be reported. Notice the score has to be lower than the threshold, since these numbers represent p-values. Optional, default 0.05
+
+--cores [int, 1] 
+  Number of computer threads. Optional, default 1
+
+--equal_size 
+  Set all fragments to the same size. Optional, default FALSE
+
+--readSize [int, 140] 
+
+--roundPow [logical] 
+
+--same_magnitude [logical]

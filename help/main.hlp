@@ -1,0 +1,39 @@
+
+Nucleosome positioning plays a major role in transcriptional regulation and most DNA-related processes. The nucleosome dynamics server offers different tools to analyze nucleosome positioning from MNase-seq experimental data and perform comparative experiments to account for the transient and dynamic nature of nucleosome positioning under different cellular states.
+
+Two specific programs, nucleR and NucleosomeDynamics, were specifically developed to perform such studies:
+
+-nucleR performs Fourier transform filtering and peak calling, in order to efficiently and accurately define and classify the location of nucleosomes.
+-NucleosomeDynamics compares different MNase-seq experiments identifying variations in nucleosomes location. It identifies upstream and downstream shifts, evictions, inclusions, and differences in nucleosome fuzzines.
+
+Additionally, a list of other nucleosome related features, like the location of nucleosome-free regions (NFR), the theoretical prediction of nucleosome phasing at gene level (periodicity), the classification of transcription start sites based on the surrounding nucleosomes (txstart), and the stiffness of the nucleosomes (gausfitting) derived from a fitting of nucleosome profiles into a Gaussian function, are also computed.
+
+Usage: docker run -v DATA_DIR:/data_dir -v PUBLIC_DIR:/public_dir mmbirb/nucldyn command [--help]
+
+Directories:
+  DATA_DIR:   Local directory to store input and output files. Prepacked workflow scripts should be stored at DATA_DIR/scripts
+  PUBLIC_DIR: Local directory to store reference genome data. Required files {assembly}/genes.gff {assembly}/chromosome_sizes
+
+Main commands:
+   run:              Run Workflow in data_dir/scripts
+   readBAM:          Read Aligned MSase-seq BAM into a RData structure (required for further process)
+   nucleR:           Determine the positions of the nucleosomes across the genome
+   NFR:              Short regions depleted of nucleosomes
+   txstart:          Classify Transciption start accordint to the properties of surrounding nucleosomes
+   periodicity:      Periodic properties of nucleosomes inside gene bodies
+   gaussfitting:     Aparent stiffness constant foreach nucleosome obtained by fitting the coverage to a gaussian distribution
+   nucDyn:           Comparative analysis of nucleosome positions in two conditions
+   nucleR2structure: 
+   toBigWig: 
+   fromBigWig: 
+   coverage: 
+   js_plot: 
+
+Statistics:
+   nucleR_stats:       Nucleosome call statistics
+   NFR_stats:          Nucleosome Free Regions statistics
+   txstart_stats:      TSS and TTS statistics
+   periodicity_stats   Statistics on Nucleosome periodicity
+   gaussfitting_stats: Statistics on stiffness
+   nucDyn_stats:       Statistics on Nucleosome Dynamics analysis
+

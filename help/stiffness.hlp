@@ -1,0 +1,19 @@
+If the coverage that contributes to a single nucleosome call is separated from the rest of the profile, its curve can be fitted to a Gaussian function. Fitting a Gaussian curve for each nuclesome signal, it is possible to get an estimation of its standard deviation which can be used to compute an apparent stiffness constant estimation for that given nucleosome (in kcal/mol/bp^2)
+
+Usage: (runNuclDyn |docker run nucldyn) gaussfitting --calls {gff} --reads {RData} --output {gff} --range [str, All|chr|chr:start-end] --t [double, 310.15]
+
+parameters:
+--calls 
+  Nucleosome calls in GFF format as obtained from NucleR
+
+--reads {RData} 
+  Sequence data in RData format as obtained from readBAM
+
+--output 
+  Output stiffness in GFF format
+
+--range 
+  Genomic range to consider: All: all chromosomes, chr: a single chomosome, chr:start-end range indicated by coordinates
+
+--t
+  Temperature (K). Optional, default 310.15K

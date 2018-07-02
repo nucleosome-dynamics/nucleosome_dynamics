@@ -1,0 +1,7 @@
+Nucleosome architectures around TSSs can be been classified based on the width
+of its NFRs (closed (c) or open (o)) and the positioning of the − 1 and + 1
+nucleosomes (missed (M), fuzzy (F) or well-positioned (W)).
+Therefore, a transcription start stide can be classified as any of the
+following:
+W-c-W, F-c-F, M-c-M, W-c-F, F-c-W, W-c-M, M-c-W, F-c-M, M-c-W, W-o-W, F-o-F,
+M-o-M, W-o-F, F-o-W, W-o-M, M-o-W, F-o-M and M-o-W
