@@ -57,14 +57,14 @@ for (i in names(args)) {
 
 range <- parseRange(params$range)
 
-message("loading inputs")
+print("loading inputs")
 calls <- readGff(params[["calls"]])
 reads <- get(load(params[["reads"]]))
 
 reads <- subsetReads(reads, range$chr, range$start, range$end)
 calls <- subsetCalls(calls, range$chr, range$start, range$end)
 
-message("performing the fittings")
+print("performing the fitting")
 gauss.df <- fitIt(calls, reads)
 gauss.df$score <- sd2stiffness(gauss.df$sd, params$t)
 

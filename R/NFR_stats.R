@@ -44,7 +44,7 @@ nfr_width = nfr$end - nfr$start
 
 ## Statistics genome-wide  ####################################################
 
-message("-- computing statistics genome-wide")
+print("-- computing statistics genome-wide")
 
 stat_nfr = data.frame(NFR=c("Total", "Mean width", "Std. Dev. width"), 
                       Value=c(nrow(nfr),

@@ -74,7 +74,7 @@ chrAssignNucs <- function (df, calls, threshold=0.3) {
 }
 
 assignNucs <- function (hs, calls, threshold=0.3) {
-    message("assigning nucleosomes")
+    print("assigning nucleosomes")
     chr.calls <- ranges(calls)
     f <- function (x) {
         chr <- x[1, "chr"]

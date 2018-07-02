@@ -40,7 +40,7 @@ params <- getopt(spec)
 
 ## Read genes #################################################################
 
-message("-- loading used genome")
+print("-- loading used genome")
 genes <- getGenes(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
@@ -52,7 +52,7 @@ genes_gr <- GRanges(genes$chrom,
 
 ## Statistics per gene ########################################################
 
-message("-- computing statistics per gene")
+print("-- computing statistics per gene")
 stf <- readGff(params$input)
 
 stf_gr <- GRanges(stf$seqname,
@@ -88,7 +88,7 @@ write.table(stat_stf[, i],
 ## Statistics genome-wide  ####################################################
 
 #--- Mean and std.dev ---
-message("-- computing statistics genome-wide")
+print("-- computing statistics genome-wide")
 
 rownames <- c("Mean stiffness", "Std. Dev. stiffness")
 a <- mean(stf_gr$score, na.rm=TRUE)

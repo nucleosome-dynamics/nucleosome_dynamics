@@ -33,7 +33,7 @@ fitIt <- function (calls, reads)
     if (class(reads) == "RangedData") {
         f <- function (x, reads) {
             chr <- x[1, "seqname"]
-            message(chr)
+            print(chr)
             fitChrNucs(x, reads[[chr]])
         }
         ddply(calls, "seqname", f, ranges(reads))

@@ -39,7 +39,7 @@ params <- getopt(spec)
 
 ## Read genes #################################################################
 
-message("-- loading used genome")
+print("-- loading used genome")
 genes <- getGenes(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
@@ -47,7 +47,7 @@ genes$tts <- as.numeric(genes$tts)
 
 ## Statistics per gene ########################################################
 
-message("-- computing statistics per gene")
+print("-- computing statistics per gene")
 phase <- readGff(params$input)
 
 sel <- c("id", "score_phase", "score_autocorrelation")
@@ -70,7 +70,7 @@ write.table(genes_out,
 
 ## Statistics genome-wide  ####################################################
 
-message("-- computing statistics genome-wide")
+print("-- computing statistics genome-wide")
 
 names <- c("Phased genes", "Not-phased genes", "Other genes")
 a <- sum(phase$score_phase <= 25)

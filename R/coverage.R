@@ -57,7 +57,7 @@ for (i in names(args)) {
 
 reads <- get(load(params$input))
 
-message("filtering duplicated reads")
+print("filtering duplicated reads")
 f.reads <- filterDuplReads(reads,
                            fdrOverAmp=params$fdrOverAmp,
                            components=params$components,
@@ -65,25 +65,25 @@ f.reads <- filterDuplReads(reads,
 
 if (is.null(params$fragmentLen)) {
     if (params$type == "single") {
-        message("estimating fragment length")
+        print("estimating fragment length")
         params$fragmentLen <- fragmentLenDetect(f.reads)
     } else if (params$type == "paired") {
         params$fragmentLen <- 170
     }
 }
 
-message("processing reads")
+print("processing reads")
 prep <- processReads(f.reads,
                      type=params$type,
                      fragmentLen=params$fragmentLen,
                      trim=params$trim)
 
-message("calculating coverage")
+print("calculating coverage")
 cover <- coverage.rpm(prep)
 
 ## Store the Result ###########################################################
 
-message("-- saving ", args[["output"]])
+prinprint("-- saving ", args[["output"]])
 save(cover, file=args[["output"]])
 
 ###############################################################################

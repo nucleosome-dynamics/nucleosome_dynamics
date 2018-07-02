@@ -71,14 +71,14 @@ getInterRans <- function(r)
 
 ## Read input #################################################################
 
-message("-- reading input")
+print("-- reading input")
 tab <- readGff(params[["input"]])  # read the nucleosome map as a gff3 input
 names(tab) <- sub("seqname", "space", names(tab))
 calls <- RangedData(tab)
 
 ## Do it ######################################################################
 
-message("-- looking for Nucleosome Free regions")
+print("-- looking for Nucleosome Free regions")
 nfr <- rd2df(irLs2rd(lapply(
     ranges(calls),
     function(x) {
@@ -93,7 +93,7 @@ nfr <- rd2df(irLs2rd(lapply(
 
 ## Store output ###############################################################
 
-message("-- saving gff output")
+print("-- saving gff output")
 # save the output as a gff3 too
 writeGff(df2gff(nfr,
                 source="nucleR",

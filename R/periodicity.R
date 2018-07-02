@@ -63,9 +63,9 @@ for (i in names(args)) {
 
 ## Some function definitions ##################################################
 
-message("loading genes")
+print("loading genes")
 genes <- getGenes(params$genes)
-message("reading calls")
+print("reading calls")
 calls.df <- readGff(params$calls)
 calls.rd <- with(calls.df,
                  RangedData(space=seqname,
@@ -74,7 +74,7 @@ calls.rd <- with(calls.df,
 
 ## Do it ######################################################################
 
-message("calculating coverage")
+print("calculating coverage")
 
 reads <- get(load(params$reads))
 f.reads <- filterDuplReads(reads, fdrOverAmp=0.05, components=1)
@@ -90,7 +90,7 @@ prep <- processReads(f.reads,
                      trim=50)
 cov <- coverage.rpm(prep)
 
-message("identifying first and last nucleosomes")
+print("identifying first and last nucleosomes")
 genes.nucs <- findGenesNucs(genes, calls.rd, params$mc.cores)
 genes.nucs$dfi <- getDfi(genes.nucs$nuc.len, params$periodicity)
 genes.nucs$autocor <- autocorFromDf(genes.nucs, cov, params$periodicity)
@@ -106,13 +106,13 @@ names(genes.nucs)[names(genes.nucs) == "first"] <- "nucleosome_first"
 names(genes.nucs)[names(genes.nucs) == "last"] <- "nucleosome_last"
 genes.nucs$nuc.length <- NULL
 
-message("writing GFF")
+print("writing GFF")
 gff <- df2gff(genes.nucs,
               source="nucleR",
               feature="nucleosome periodicity")
 writeGff(gff, params$gffOutput)
 
-message("writing bigWig output")
+print("writing bigWig output")
 splited <- lapply(covPredAll, splitAtZeros)
 writeBigWig(splited, params$bwOutput, params$chrom_sizes)
 

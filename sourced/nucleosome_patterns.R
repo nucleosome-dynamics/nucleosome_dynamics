@@ -70,7 +70,7 @@ patternsByChrDF <- function (calls, df, col.id="name", col.chrom="chrom",
 {   # Works by first splitting by chromosomes to save some redundant subsetting
     iterFun <- function (chr.genes) {
         chrom <- chr.genes[1, col.chrom]
-        message(chrom)
+        print(chrom)
         chr.nucs <- calls[space(calls) == chrom, ]
         if (nrow(chr.nucs) == 0) {
             emptyChrom(df         = chr.genes,
@@ -102,7 +102,7 @@ nucleosomePatternsDF <- function (calls, df, col.id="name", col.pos="pos",
     n <- nrow(df)
     iterRows <- function (i, report.every=100) {
         if (i %% report.every == 0) {
-            message(i, "/", n)
+            print(i, "/", n)
         }
         nucleosomePatterns(calls  = calls,
                            id     = df[i, col.id],
