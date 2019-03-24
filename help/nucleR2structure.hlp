@@ -1,3 +1,0 @@
-nucleR2structure
-Usage: $op --calls {gff} --genome_file {fasta} --range [chrI:2000-2600] --seq_output {seq} --nucs_output {nucleosomes} --margin [int]
-

@@ -74,6 +74,9 @@ df2gff <- function (df, ...)
 
 writeGff <- function (df, outpath)
 {
+    # Disable scientific notation when writing start and end 
+    df$start <- format(df$start, scientific=FALSE)
+    df$end <- format(df$end, scientific=FALSE)
     # Use this to write the output of df2gff to disk.
     write.table(df,
                 file      = outpath,

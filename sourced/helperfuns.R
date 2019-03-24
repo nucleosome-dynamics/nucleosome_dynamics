@@ -38,7 +38,7 @@ checkInF <- function(f)
 
 makePlotable <- function(dyn)
 {
-    cat("building structure to be saved for future plotting\n")
+    message("building structure to be saved for future plotting")
 
     useful.types <- c("originals", "right.shifts", "left.shifts", "indels")
     chrs <- unique(unlist(lapply(seqnames(set.a(dyn)), levels)))
@@ -146,16 +146,23 @@ irLs2rd <- function(x)
                space=rep(names(x),
                          sapply(x, length)))
 
-sortReads <- function (reads)
-{   # Sort reads RangedData format. Sort them first by chromosome, then by
+#sortReads <- function (reads)
+#{   # Sort reads RangedData format. Sort them first by chromosome, then by
+#    # start and then by end
+#    sortChrs <- function (rans)
+#        rans[order(names(rans))]
+#    sortRans <- function (x) {
+#        tmp <- x[sort.list(end(x))]
+#        tmp[sort.list(start(tmp))]
+#    }
+#    irLs2rd(lapply(sortChrs(ranges(reads)), sortRans))
+#}
+sortReads <- function(reads)
+{
+    # Sort reads RangedData format. Sort them first by chromosome, then by
     # start and then by end
-    sortChrs <- function (rans)
-        rans[order(names(rans))]
-    sortRans <- function (x) {
-        tmp <- x[sort.list(end(x))]
-        tmp[sort.list(start(tmp))]
-    }
-    irLs2rd(lapply(sortChrs(ranges(reads)), sortRans))
+    tmp = reads
+    tmp[order(as.factor(seqnames(tmp)), start(tmp), end(tmp))]
 }
 
 ###############################################################################

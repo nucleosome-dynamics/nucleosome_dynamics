@@ -1,3 +1,0 @@
-nucDyn_stats:     Statistics on Nucleosome Dynamics analysis
-Usage: $op --input {gff} --genome {gff} --out_genes {csv} --out_gw {png}
-

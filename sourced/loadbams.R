@@ -21,15 +21,15 @@ loadSingleBam <- function (exp)
     filtered.bam <- lapply(bam, `[`, non.na)
 
     # IRanges
-    RangedData(space  = filtered.bam$rname,
-               ranges = IRanges(start = filtered.bam[["pos"]],
-                                width = filtered.bam[["qwidth"]]),
+    GRanges(   filtered.bam$rname,
+               IRanges(start = filtered.bam[["pos"]],
+                       width = filtered.bam[["qwidth"]]),
                strand = filtered.bam[["strand"]])
 }
 
 processStrand <- function (strand, bam)
 {
-    cat(sprintf("processing strand %s\n", strand))
+    message(sprintf("processing strand %s", strand))
 
     p1 <- ifelse(strand == "+", 99, 163)
     p2 <- ifelse(strand == "+", 147, 83)
@@ -56,16 +56,16 @@ processStrand <- function (strand, bam)
         stop(sprintf("ERROR: Mate selection for %s strand is invalid",
                      strand))
     } else {
-        RangedData(space  = as.character(reads1$rname),
-                   ranges = IRanges(start = reads1$pos,
-                                    end   = reads2$pos + reads2$qwidth - 1))
+        GRanges( as.character(reads1$rname),
+                 IRanges(start = reads1$pos,
+                         end   = reads2$pos + reads2$qwidth - 1))
     }
 }
 
 loadPairedBam <- function (file)
 {
     # Read BAM file (only one access to disk, intended for Shared Memory)
-    cat(sprintf("reading file %s\n", file))
+    message(sprintf("reading file %s", file))
 
     what <- c("qname",
               "flag",
@@ -77,14 +77,14 @@ loadPairedBam <- function (file)
               "mpos")
     bam <- as.data.frame(scanBam(file=file, param=ScanBamParam(what=what))[[1]])
 
-    cat("processing flags\n")
+    message("processing flags")
     ## We will process the flags in R
     ## (an alternative is multiple scanBam calls...)
     bam$flag <- bam$flag %% 256
 
     # Process both strand and return the reads in sorted order
-    sortReads(rbind(processStrand("+", bam),
-                    processStrand("-", bam)))
+    sortReads(c(processStrand("+", bam),
+                processStrand("-", bam)))
 }
 
 loadBAM <- function (f, type="single")

@@ -1,9 +1,0 @@
-Run prepacked workflow scripts (Experimental)
-
-Usage: (runNuclDyn | docker run nucldyn) run  WF_file
-
-Parameters:
-WF_file
-  Executable script containing a series of Nucleosome Dynamics commands. Should be placed at the DataDir/scripts folder. Non Nucleosome Dynamics commands will be ignored.
-
-

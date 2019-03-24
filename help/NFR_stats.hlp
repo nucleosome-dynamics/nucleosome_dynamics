@@ -1,3 +1,0 @@
-NFR_stats:        Nucleosome Free Regions statistics
-Usage: $op --input {gff} --out_gw {csv} --genome {gff}
-
