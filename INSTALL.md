@@ -6,7 +6,7 @@ For running the latest 'Nucleosome Dynamics CLI' version, simply clone the maste
 git clone http://mmb.irbbarcelona.org/gitlab/NuclDynamics/nucleosome_dynamics_CLI 
 ``` 
 
-Some functionalities of these scripts depends on third-party software that needs an independent installation:
+Some functionalities of these scripts depend on third-party software that needs an independent installation:
 
 - 1. [nucleR R package](#nucleR)
 - 2. [NucDyn R package](#NucDyn)
@@ -19,7 +19,7 @@ Nucleosome positioning predictions in 'Nucleosome Dynamics CLI' relies on the sp
 
 <a name="NucDyn"></a>
 #### 2. NucDyn R package
-Nucleosome architecture comparison in 'Nucleosome Dynamics CLI' depend on the specific methods implemented in 'NucDyn' package. There are also several options for installing NuclDyn. Check them all [here](http://mmb.pcb.ub.es/gitlab/NuclDynamics/NuclDyn).
+Nucleosome architecture comparison in 'Nucleosome Dynamics CLI' depend on the specific methods implemented in 'NucDyn' package. There are also several options for installing NuclDyn. Check them all [here](http://mmb.pcb.ub.es/gitlab/NuclDynamics/NucDyn).
 
 <a name="UCSC"></a>
 #### 3. UCSC wig utils
