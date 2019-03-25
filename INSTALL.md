@@ -35,6 +35,6 @@ wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 
 Make sure you save them in a directory included in your **$PATH**, or simply add your installation path directory to it by editing in your `.bashrc` home directory the following line:
 
-``sh
+```sh
 export PATH="$PATH:/absolute/path/to/wig_utils"
-``
+```
