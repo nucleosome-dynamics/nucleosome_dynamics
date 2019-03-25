@@ -8,9 +8,9 @@ git clone http://mmb.irbbarcelona.org/gitlab/NuclDynamics/nucleosome_dynamics_CL
 
 Some functionalities of these scripts depend on third-party software that needs an independent installation:
 
-- 1. [nucleR R package](#nucleR)
-- 2. [NucDyn R package](#NucDyn)
-- 3. [UCSC wig utils](#UCSC)
+- 1. nucleR R package
+- 2. NucDyn R package
+- 3. UCSC wig utils
 
 
 <a name="nucleR"></a>
