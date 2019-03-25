@@ -9,8 +9,10 @@ This repository includes the set of R programs implementing 'Nucleosome Dynamics
 
 - [Nucleosome Dynamics](#Nucleosome_Dynamics)
 - [Requirements](#Requirements)
-- [Installation](INSTALL.md)
+- [Installation](#Installation)
+- [Input data](#Input_data)
 - [Running Nucleosome Dynamics CLI](#Running_Nucleosome_Dynamics_CLI)
+    - [Example](#Example)
 - [Usage](Usage)
     - [Analyses usage](#Analyses_usage)
         - [ReadBAM](#usage_readBAM)
@@ -38,40 +40,27 @@ This repository includes the set of R programs implementing 'Nucleosome Dynamics
 ----
 
 
-<a name="Statistics_usage"></a>
-<a name="usage_nucleR_stats"></a>
-<a name="usage_NFR_stats"></a>
-<a name="usage_txstart_stats"></a>
-<a name="usage_periodicity_stats"></a>
-<a name="usage_stiffness_stats"></a>
-<a name="usage_nucDyn_stats"></a>
-<a name="Results"></a>
-<a name="NucDyn"></a>
-<a name="nucleR"></a>
-<a name="Stiffness"></a>
-<a name="Periodicity"></a>
-<a name="TSS_classes"></a>
-
-
 <a name="Nucleosome_Dynamics"></a>
 # Nucleosome Dynamics
 
-Nucleosome positioning plays a major role in transcriptional regulation DNA replication and DNA repair. The Nucleosome Dynamics CLI offers different R scripts to analyze nucleosome positioning from MNase-seq experimental data and to compare experiments to account for the transient and dynamic nature of nucleosomes under different cellular states.
+Nucleosome positioning plays a major role in transcriptional regulation DNA replication and DNA repair. The Nucleosome Dynamics CLI offers different R scripts to **analyze** nucleosome positioning from **MNase-seq** experimental data and to compare experiments to account for the transient and dynamic nature of nucleosomes under different cellular states.
 
 The main analyses are performed with nucleR and NucDyn R packages:
 
-* nucleR performs Fourier transform filtering and peak calling to efficiently and accurately find the location of nucleosomes and classify them according to their fuzziness. 
-* NucDyn detects changes in nucleosome architectures between two MNase-seq experiments. It identifies nucleosomes’ insertions, evictions and shifts at the read level.
+* [nucleR](http://mmb.pcb.ub.es/gitlab/NuclDynamics/nucleR) performs Fourier transform filtering and peak calling to efficiently and accurately find the location of nucleosomes and classify them according to their fuzziness. 
+* [NucDyn](http://mmb.pcb.ub.es/gitlab/NuclDynamics/NucDyn) detects changes in nucleosome architectures between two MNase-seq experiments. It identifies nucleosomes’ insertions, evictions and shifts at the read level.
 
-Additionally, other nucleosome related analysis can be performed:
+'Nucleosome Dynamics' also offers other nucleosome-related analyses:
 * NFR: location of nucleosome-free regions
 * TSS: classification of transcription start sites based on the surrounding nucleosomes
 * Periodicity: study of nucleosome phasing at gene level
 * Stiffness: computation of stiffness of the nucleosomes derived from fitting a Gaussian function to nucleosome profiles
 
-After computing all the analyses, a series of statistics (plots and tables) can be obtained to sumarize 
-* Genome-wide values of all calculations
-* Counts and averages at the gene level
+Additionally, after computing all the analyses, a series of statistics (plots and tables) can be computed to obtain:
+* genome-wide values for all calculations
+* counts and averages at the gene level
+
+'Nucleosome Dynamics CLI' is not only offered throught the native R interface, but a number of other implementation have been prepared in order to reach also non-R users. These implementations include two web-based platforms ([MuGVRE](http://mmb.pcb.ub.es/gitlab/NuclDynamics/nucleosome_dynamics_MuGVRE) and [Galaxy](http://mmb.pcb.ub.es/gitlab/NuclDynamics/galaxy)) and two containerized installations ([docker](http://mmb.pcb.ub.es/gitlab/NuclDynamics/docker) and [singularity](https://github.com/nucleosome-dynamics/nucleosome_dynamics_singularity))
 
 
 
@@ -102,11 +91,19 @@ After computing all the analyses, a series of statistics (plots and tables) can 
     -  nucleR
 * UCSC wig utilities
     - wigToBigWig
+    - bigWigToWig 
+    - fetchChromSizes
 
 <a name="Installation"></a>
 # Installation
 
-The instructions on how to install 'Nucleosome Dynamics CLI' are detailed at [INSTALL.md](INSTALL.md)
+The instructions on how to install 'Nucleosome Dynamics CLI' are detailed at [here](INSTALL.md).
+
+<a name="Input_data"></a>
+# Input data
+
+The primary data for 'Nucleosome Dynamics CLI' is essencially MNase-seq or ATAC-seq **aligned and sorted reads** in BAM format. Additionally, as detailed in the [Usage](#Usage) section below, some data on the reference genome is also required.
+Go to [`test/data`](test) for a detailed description on such data. The folder also contains an example data set for ilustrating the R program usage.
 
 <a name="Running_Nucleosome_Dynamics_CLI"></a>
 # Running Nucleosome Dynamics CLI
@@ -151,9 +148,30 @@ Available `analysis_stats`.R are:
 | nucDyn_stats|    Statistics on Nucleosome Dynamics analysis|
 
 <br/>
-<br/>
 
-The [Usage](#Usage) section below describes the available arguments for each individual analysis, and similary, the [Results](#Results) section includes their output file descriptions.
+The [Usage](#Usage) section below describes the arguments for each individual analysis and similary, the [Results](#Results) section includes a description of the sequence annotations files (GFF) generated.
+
+
+<a name="Example"></a>
+### Example
+For calling nucleosome positions in a pair of aligned MNase-seq BAM files, 'nucleR' is the analysis of interest. As input, it takes the MNase-seq reads in Rdata format, so first, we need load such reads into an RData file using `readBAM`:
+
+```sh
+bin/readBAM.R --input test/data/cellcycleG2_chrII.bam --output test/data/cellcycleG2_chrII.RData --type paired
+```
+Once the RData is generated, run the calling with `nucleR` as follows:
+
+```sh
+bin/nucleR.R --input test/data/cellcycleG2_chrII.RData --output test/data/NR_cellcycleG2_chrII.gff --type paired --width 147 --minoverlap 80
+```
+
+For extracting an statistical report of the 'nucleR', feed the resulting GFF file into `statistics/nucleR`:
+
+```sh
+statistics/nucleR.R --input test/data/NR_cellcycleG2_chrII.gff --genome test/data/refGenomes/R64-1-1/genes.gff --out_genes test/data/NR_cellcycleG2_chrII_genes.csv --out_gw test/data/NR_cellcycleG2_chrII_genes.csv
+```
+
+Check the argument descriptions for each particular analysis at the [Usage](#usage_nucleR) section. The 'nucleR' execution will generate the NR_cellcycleG2_chrII.gff track file with the predicted positions an a number of scores and other annotations described in the [Results](#nucleR) section. Most of the sequence browsers can visualized it, for instance, [JBrowse](https://jbrowse.org/).
 
 
 <a name="Usage"></a>
@@ -411,6 +429,9 @@ The [Usage](#Usage) section below describes the available arguments for each ind
 
 <a name="Results"></a>
 # Results
+
+Most of 'Nucleosome Dynamics CLI' output files are **sequence annotation files**, either in GFF or BW format. They are ready to be visualized as sequence tracks in most modern sequence browsers.
+In addition, for each track hit further information is offered to help analysing the rellevance of each individual result. Following, an explanation on what represents each analysis hit, and the list of attributes accompanying then.
 
 <a name="NucDyn"></a>
 ##### NucDyn
