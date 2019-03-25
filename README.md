@@ -56,7 +56,25 @@ This repository includes the set of R programs implementing 'Nucleosome Dynamics
 <a name="Nucleosome_Dynamics"></a>
 # Nucleosome Dynamics
 
-TDB - ND introduction?
+Nucleosome positioning plays a major role in transcriptional regulation DNA replication and DNA repair. The Nucleosome Dynamics CLI offers different R scripts to analyze nucleosome positioning from MNase-seq experimental data and to compare experiments to account for the transient and dynamic nature of nucleosomes under different cellular states.
+
+The main analyses are performed with nucleR and NucDyn R packages:
+
+* nucleR performs Fourier transform filtering and peak calling to efficiently and accurately find the location of nucleosomes and classify them according to their fuzziness. 
+* NucDyn detects changes in nucleosome architectures between two MNase-seq experiments. It identifies nucleosomes’ insertions, evictions and shifts at the read level.
+
+Additionally, other nucleosome related analysis can be performed:
+* NFR: location of nucleosome-free regions
+* TSS: classification of transcription start sites based on the surrounding nucleosomes
+* Periodicity: study of nucleosome phasing at gene level
+* Stiffness: computation of stiffness of the nucleosomes derived from fitting a Gaussian function to nucleosome profiles
+
+After computing all the analyses, a series of statistics (plots and tables) can be obtained to sumarize 
+* Genome-wide values of all calculations
+* Counts and averages at the gene level
+
+
+
 
         ┌──────────────────────────────────────────────────────────┐
         │                   Nucleomose Dynamics                    │
