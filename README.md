@@ -3,9 +3,11 @@
 This repository includes the set of R programs implementing 'Nucleosome Dynamics' analyses. 
 
 <br/>
+
 | Landing page | http://mmb.irbbarcelona.org/NucleosomeDynamics| 
 | ------------ |----------------------------------------------|
-<br/>
+
+
 ----
 
 ## Table of contents
