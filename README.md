@@ -24,14 +24,14 @@ This repository includes the set of R programs implementing 'Nucleosome Dynamics
         - [nucleR](#usage_nucleR)
         - [NucDyn](#usage_nucDyn)
         - [NFR](#usage_NFR)
-        - [txstart -- or TSS???](#usage_txstart)
+        - [TSS](#usage_txstart)
         - [Periodicity](#usage_periodicity)
         - [Stiffness](#usage_stiffness)
     - [Statistics usage](#Statistics_usage)
         - [nucleR](#usage_nucleR_stats)
         - [NucDyn](#usage_nucDyn_stats)
         - [NFR](#usage_NFR_stats)
-        - [txstart -- or TSS???](#usage_txstart_stats)
+        - [TSS](#usage_txstart_stats)
         - [Periodicity](#usage_periodicity_stats)
         - [Stiffness](#usage_stiffness_stats)
 - [Results](#Results)
@@ -162,18 +162,18 @@ The [Usage](#Usage) section below describes the arguments for each individual an
 For calling nucleosome positions in a pair of aligned MNase-seq BAM files, 'nucleR' is the analysis of interest. As input, it takes the MNase-seq reads in Rdata format, so first, we need load such reads into an RData file using `readBAM`:
 
 ```sh
-bin/readBAM.R --input test/data/cellcycleG2_chrII.bam --output test/data/cellcycleG2_chrII.RData --type paired
+Rscript bin/readBAM.R --input test/data/cellcycleG2_chrII.bam --output test/data/cellcycleG2_chrII.RData --type paired
 ```
 Once the RData is generated, run the calling with `nucleR` as follows:
 
 ```sh
-bin/nucleR.R --input test/data/cellcycleG2_chrII.RData --output test/data/NR_cellcycleG2_chrII.gff --type paired --width 147 --minoverlap 80
+Rscript bin/nucleR.R --input test/data/cellcycleG2_chrII.RData --output test/data/NR_cellcycleG2_chrII.gff --type paired --width 147 --minoverlap 80
 ```
 
 For extracting an statistical report of the 'nucleR', feed the resulting GFF file into `statistics/nucleR`:
 
 ```sh
-statistics/nucleR.R --input test/data/NR_cellcycleG2_chrII.gff --genome test/data/refGenomes/R64-1-1/genes.gff --out_genes test/data/NR_cellcycleG2_chrII_genes.csv --out_gw test/data/NR_cellcycleG2_chrII_genes.csv
+Rscript statistics/nucleR.R --input test/data/NR_cellcycleG2_chrII.gff --genome test/data/refGenomes/R64-1-1/genes.gff --out_genes test/data/NR_cellcycleG2_chrII_genes.csv --out_gw test/data/N/NR_cellcycleG2_chrII_stat.csv
 ```
 
 Check the argument descriptions for each particular analysis at the [Usage](#usage_nucleR) section. The 'nucleR' execution will generate the NR_cellcycleG2_chrII.gff track file with the predicted positions an a number of scores and other annotations described in the [Results](#nucleR) section. Most of the sequence browsers can visualized it, for instance, [JBrowse](https://jbrowse.org/).
@@ -186,7 +186,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 ## Analyses usage
 
 <a name="usage_readBAM"></a>
-**readBAM** --input {bam} --output {RData} --type (single|paired)
+Rscript bin/**readBAM.R** --input {bam} --output {RData} --type (single|paired)
 
         --input
                 Sequence file in BAM format
@@ -196,7 +196,8 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
                 Type of sequence data: single|paired
 
 <a name="usage_nucleR"></a>
-**nucleR** --input {RData} --output {gff} --type (single|PAIRED) --width {int} --minoverlap {int}
+
+Rscript bin/**nucleR.R** --input {RData} --output {gff} --type (single|PAIRED) --width {int} --minoverlap {int}
 [--dyad_length {int} --thresholdPercentage {double} --hthresh {double} --wthresh {double} --pcKeepComp {double} --fdrOverAmp {double} --components {int} --fragmentLen {int} --trim {int} --threshold {logical} --thresholdValue {int} --chr STR --start {int} --end {int} ]
 
         --input: 
@@ -240,7 +241,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_nucDyn"></a>
-**nucDyn**  --input1 {RData} --input2 {RData} --calls1 {gff} --calls2 {gff} --outputGff {gff} --outputBigWig {bw}  --genome {chrom.sizes} --range {str}
+Rscript bin/**nucDyn.R**  --input1 {RData} --input2 {RData} --calls1 {gff} --calls2 {gff} --outputGff {gff} --outputBigWig {bw}  --genome {chrom.sizes} --range {str}
 [ --plotRData {RData} --maxDiff {int} --maxLen {int} --shift_min_nreads {int} --shift_threshold {double} --indel_min_nreads {int} --indel_threshold {double} --cores {int} --equal_size (logical) --readSize {int} ]
 
         -- input1, --input2
@@ -278,7 +279,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_NFR"></a>
-**NFR**  --input {gff} --output {gff} [--minwidth {int} --threshold {int}  ]
+Rscript bin/**NFR.R**  --input {gff} --output {gff} [--minwidth {int} --threshold {int}  ]
 
         --input 
                 Nucleosome calls in GFF format as obtained from NucleR
@@ -291,7 +292,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_txstart"></a>
-**txstart**   ---calls {gff} --genome {gff} --output {gff} --window {int} --open_thresh {int} [ --cores {int} --p1.max.downstream {int} ]
+Rscript bin/**txstart.R**   ---calls {gff} --genome {gff} --output {gff} --window {int} --open_thresh {int} [ --cores {int} --p1.max.downstream {int} ]
 
 
         --calls
@@ -311,7 +312,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_periodicity"></a>
-**periodicity** --calls {gff} --reads {RData} --type (single|paired) --gffOutput {gff} --bwOutput {bw} --genes {gff} --chrom_sizes {chrom.sizes}
+Rscript bin/**periodicity.R** --calls {gff} --reads {RData} --type (single|paired) --gffOutput {gff} --bwOutput {bw} --genes {gff} --chrom_sizes {chrom.sizes}
 [--periodicity {int} --cores {int} ]
 
         --calls
@@ -335,7 +336,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_stiffness"></a>
-**stiffness** --calls {gff} --reads {RData} --output {gff} --range {str}  [--t {double}] ]
+Rscript bin/**stiffness.R** --calls {gff} --reads {RData} --output {gff} --range {str}  [--t {double}] ]
 
         --calls
                 Nucleosome calls in GFF format as obtained from NucleR
@@ -354,7 +355,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 ## Statistics usage
 
 <a name="usage_nucleR_stats"></a>
-**nucleR_stats** --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
+Rscript statistics/**nucleR.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
 
         --input
                 Nucleosome calls in GFF format as obtained from NucleR
@@ -367,7 +368,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_nucDyn_stats"></a>
-**nucDyn_stats** --input {gff} --genome {gff} --out_genes {csv} --out_gw {png}
+Rscript statistics/**nucDyn.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {png}
 
         --input 
                 Nucleosome calls in GFF format as obtained from stiffness_stats
@@ -380,7 +381,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_NFR_stats"></a>
-**NFR_stats** --input {gff}  --genome {gff} --out_gw {csv}
+Rscript statistics/**NFR.R** --input {gff}  --genome {gff} --out_gw {csv}
         --input
                 Nucleosome calls in GFF format as obtained from NFR
         --genome 
@@ -390,7 +391,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_txstart_stats"></a>
-**txstart_stats** --input {gff} --genome {gff} --out_genes {csv} --out_gw {png} --out_gw2 {png}
+Rscript statistics/**txstart.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {png} --out_gw2 {png}
 
         --input 
                 Nucleosome calls in GFF format as obtained from txstart
@@ -405,7 +406,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_periodicity_stats"></a>
-**periodicity_stats** --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
+Rscript statistics/**periodicity.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
 
         --input 
                 Nucleosome calls in GFF format as obtained from periodicity
@@ -418,7 +419,7 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 
 
 <a name="usage_stiffness_stats"></a>
-**stiffness_stats** -input {gff} --genome {gff} --out_genes {csv} --out_gw {csv} --out_gw2 {png}
+Rscript statistics/**stiffness.R** -input {gff} --genome {gff} --out_genes {csv} --out_gw {csv} --out_gw2 {png}
 
         --input 
                 Nucleosome calls in GFF format as obtained from stiffness_stats
