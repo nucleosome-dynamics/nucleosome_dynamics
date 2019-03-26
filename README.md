@@ -145,12 +145,12 @@ Available `analysis_stats`.R are:
 
 | `[analysis_stats]` | Description |
 | -------- | -------- |
-| nucleR_stats|  Nucleosome call statistics|
-| NFR_stats|             Nucleosome Free Regions statistics|
-| txstart_stats|         TSS and TTS statistics|
-| periodicity_stats|  Statistics on Nucleosome periodicity|
-| stiffness_stats|      Statistics on stiffness|
-| nucDyn_stats|    Statistics on Nucleosome Dynamics analysis|
+| nucleR|  Nucleosome call statistics|
+| NFR|             Nucleosome Free Regions statistics|
+| txstart|         TSS and TTS statistics|
+| periodicity|  Statistics on Nucleosome periodicity|
+| stiffness|      Statistics on stiffness|
+| nucDyn|    Statistics on Nucleosome Dynamics analysis|
 
 <br/>
 
