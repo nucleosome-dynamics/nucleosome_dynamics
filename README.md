@@ -186,7 +186,10 @@ Check the argument descriptions for each particular analysis at the [Usage](#usa
 ## Analyses usage
 
 <a name="usage_readBAM"></a>
-Rscript bin/**readBAM.R** --input {bam} --output {RData} --type (single|paired)
+#### bin/readBAM.R
+```
+Rscript bin/readBAM.R --input {bam} --output {RData} --type (single|paired)
+```
 
         --input
                 Sequence file in BAM format
@@ -196,9 +199,11 @@ Rscript bin/**readBAM.R** --input {bam} --output {RData} --type (single|paired)
                 Type of sequence data: single|paired
 
 <a name="usage_nucleR"></a>
-
-Rscript bin/**nucleR.R** --input {RData} --output {gff} --type (single|PAIRED) --width {int} --minoverlap {int}
-[--dyad_length {int} --thresholdPercentage {double} --hthresh {double} --wthresh {double} --pcKeepComp {double} --fdrOverAmp {double} --components {int} --fragmentLen {int} --trim {int} --threshold {logical} --thresholdValue {int} --chr STR --start {int} --end {int} ]
+#### bin/nucleR
+```
+Rscript bin/**nucleR.R** --input {RData} --output {gff} --type (single|PAIRED) --minoverlap {int} \
+[--width {int} --dyad_length {int} --thresholdPercentage {double} --hthresh {double} --wthresh {double} --pcKeepComp {double} --fdrOverAmp {double} --components {int} --fragmentLen {int} --trim {int} --threshold {logical} --thresholdValue {int} --chr STR --start {int} --end {int} ]
+```
 
         --input: 
                 Input BAM file (RData format)
@@ -206,10 +211,10 @@ Rscript bin/**nucleR.R** --input {RData} --output {gff} --type (single|PAIRED) -
                 Nucleosome calls in GFF format. Annotations: Score_weight (0-1), Score_height (0-1), class (W, F, uncertain)
         --type
                 Type of sequence data: single|paired
-        --width: 
-                Width given to nucleosome calls previous to merging (bp). Default 147 
         --minoverlap: 
                 Minimum number of overlapping base pairs in two nucleosome calls for them to be merged into one (bp).
+        --width: 
+                Width given to nucleosome calls previous to merging (bp). Default 147 
         --dyad_length: 
                 Length of the reads that should be used for the nucleosome calling to define the dyad of the nucleosomes, keeping that number of bases around the center of   each fragment (bp). Optional. Default 50 bp.
         --hthresh: 
@@ -241,8 +246,11 @@ Rscript bin/**nucleR.R** --input {RData} --output {gff} --type (single|PAIRED) -
 
 
 <a name="usage_nucDyn"></a>
-Rscript bin/**nucDyn.R**  --input1 {RData} --input2 {RData} --calls1 {gff} --calls2 {gff} --outputGff {gff} --outputBigWig {bw}  --genome {chrom.sizes} --range {str}
+#### bin/nucDyn.R
+```sh
+Rscript bin/nucDyn.R  --input1 {RData} --input2 {RData} --calls1 {gff} --calls2 {gff} --outputGff {gff} --outputBigWig {bw}  --genome {chrom.sizes} --range {str} \
 [ --plotRData {RData} --maxDiff {int} --maxLen {int} --shift_min_nreads {int} --shift_threshold {double} --indel_min_nreads {int} --indel_threshold {double} --cores {int} --equal_size (logical) --readSize {int} ]
+```
 
         -- input1, --input2
                 Input BAM from MNase-seq in RData format (from readBAM)
@@ -279,7 +287,10 @@ Rscript bin/**nucDyn.R**  --input1 {RData} --input2 {RData} --calls1 {gff} --cal
 
 
 <a name="usage_NFR"></a>
-Rscript bin/**NFR.R**  --input {gff} --output {gff} [--minwidth {int} --threshold {int}  ]
+#### bin/NFR.R
+```sh
+Rscript bin/NFR.R  --input {gff} --output {gff} [--minwidth {int} --threshold {int}  ]
+```
 
         --input 
                 Nucleosome calls in GFF format as obtained from NucleR
@@ -292,8 +303,11 @@ Rscript bin/**NFR.R**  --input {gff} --output {gff} [--minwidth {int} --threshol
 
 
 <a name="usage_txstart"></a>
-Rscript bin/**txstart.R**   ---calls {gff} --genome {gff} --output {gff} --window {int} --open_thresh {int} [ --cores {int} --p1.max.downstream {int} ]
-
+#### bin/txstart.R
+```
+Rscript bin/txstart.R  --calls {gff} --genome {gff} --output {gff} --window {int} --open_thresh {int} \
+[ --cores {int} --p1.max.downstream {int} ]
+```
 
         --calls
                 Nucleosome calls as obtained form NucleR. GFF format
@@ -312,8 +326,11 @@ Rscript bin/**txstart.R**   ---calls {gff} --genome {gff} --output {gff} --windo
 
 
 <a name="usage_periodicity"></a>
-Rscript bin/**periodicity.R** --calls {gff} --reads {RData} --type (single|paired) --gffOutput {gff} --bwOutput {bw} --genes {gff} --chrom_sizes {chrom.sizes}
+#### bin/periodicity.R
+```sh
+Rscript bin/periodicity.R --calls {gff} --reads {RData} --type (single|paired) --gffOutput {gff} --bwOutput {bw} --genes {gff} --chrom_sizes {chrom.sizes} \
 [--periodicity {int} --cores {int} ]
+```
 
         --calls
                 Nucleosome calls in GFF format as obtained from NucleR
@@ -336,7 +353,11 @@ Rscript bin/**periodicity.R** --calls {gff} --reads {RData} --type (single|paire
 
 
 <a name="usage_stiffness"></a>
-Rscript bin/**stiffness.R** --calls {gff} --reads {RData} --output {gff} --range {str}  [--t {double}] ]
+#### bin/stiffness.R
+```sh
+Rscript bin/stiffness.R --calls {gff} --reads {RData} --output {gff} --range {str} \
+[--t {double}] ]
+```
 
         --calls
                 Nucleosome calls in GFF format as obtained from NucleR
@@ -355,7 +376,10 @@ Rscript bin/**stiffness.R** --calls {gff} --reads {RData} --output {gff} --range
 ## Statistics usage
 
 <a name="usage_nucleR_stats"></a>
-Rscript statistics/**nucleR.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
+#### statistics/nucleR.R
+```sh
+Rscript statistics/nucleR.R --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
+```
 
         --input
                 Nucleosome calls in GFF format as obtained from NucleR
@@ -368,7 +392,10 @@ Rscript statistics/**nucleR.R** --input {gff} --genome {gff} --out_genes {csv} -
 
 
 <a name="usage_nucDyn_stats"></a>
-Rscript statistics/**nucDyn.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {png}
+#### statistics/nucDyn.R
+```sh
+Rscript statistics/nucDyn.R --input {gff} --genome {gff} --out_genes {csv} --out_gw {png}
+```
 
         --input 
                 Nucleosome calls in GFF format as obtained from stiffness_stats
@@ -381,7 +408,10 @@ Rscript statistics/**nucDyn.R** --input {gff} --genome {gff} --out_genes {csv} -
 
 
 <a name="usage_NFR_stats"></a>
-Rscript statistics/**NFR.R** --input {gff}  --genome {gff} --out_gw {csv}
+#### statistics/NFR.R
+```sh
+Rscript statistics/NFR.R --input {gff}  --genome {gff} --out_gw {csv}
+```
         --input
                 Nucleosome calls in GFF format as obtained from NFR
         --genome 
@@ -391,7 +421,10 @@ Rscript statistics/**NFR.R** --input {gff}  --genome {gff} --out_gw {csv}
 
 
 <a name="usage_txstart_stats"></a>
-Rscript statistics/**txstart.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {png} --out_gw2 {png}
+#### statistics/txstart.R
+```sh
+Rscript statistics/txstart.R --input {gff} --genome {gff} --out_genes {csv} --out_gw {png} --out_gw2 {png}
+```
 
         --input 
                 Nucleosome calls in GFF format as obtained from txstart
@@ -406,7 +439,10 @@ Rscript statistics/**txstart.R** --input {gff} --genome {gff} --out_genes {csv} 
 
 
 <a name="usage_periodicity_stats"></a>
-Rscript statistics/**periodicity.R** --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
+#### statistics/periodicity.R
+```sh
+Rscript statistics/periodicity.R --input {gff} --genome {gff} --out_genes {csv} --out_gw {csv}
+```
 
         --input 
                 Nucleosome calls in GFF format as obtained from periodicity
@@ -419,7 +455,10 @@ Rscript statistics/**periodicity.R** --input {gff} --genome {gff} --out_genes {c
 
 
 <a name="usage_stiffness_stats"></a>
-Rscript statistics/**stiffness.R** -input {gff} --genome {gff} --out_genes {csv} --out_gw {csv} --out_gw2 {png}
+#### statistics/stiffness.R
+```sh
+Rscript statistics/stiffness.R -input {gff} --genome {gff} --out_genes {csv} --out_gw {csv} --out_gw2 {png}
+```
 
         --input 
                 Nucleosome calls in GFF format as obtained from stiffness_stats
