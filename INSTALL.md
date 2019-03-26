@@ -8,9 +8,9 @@ git clone https://github.com/nucleosome-dynamics/nucleosome_dynamics.git
 
 Some functionalities of these scripts depend on third-party software that needs an independent installation:
 
-- 1. nucleR R package
-- 2. NucDyn R package
-- 3. UCSC wig utils
+- nucleR R package
+- NucDyn R package
+- UCSC wig utils
 
 
 <a name="nucleR"></a>
@@ -30,7 +30,8 @@ mkdir wig_utils;
 cd wig_utils;
 wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/wigToBigWig &&  \ 
 wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bigWigToWig  && \ 
-wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes;
+chmod a+x *
 ```
 
 Make sure you save them in a directory included in your **$PATH**, or simply add your installation path directory to it by editing in your `.bashrc` home directory the following line:
@@ -38,3 +39,8 @@ Make sure you save them in a directory included in your **$PATH**, or simply add
 ```sh
 export PATH="$PATH:/absolute/path/to/wig_utils"
 ```
+And source it:
+```sh
+source .bashrc
+```
+
