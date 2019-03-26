@@ -52,8 +52,8 @@ Nucleosome positioning plays a major role in transcriptional regulation DNA repl
 
 The main analyses are performed with nucleR and NucDyn R packages:
 
-* [nucleR](http://mmb.pcb.ub.es/gitlab/NuclDynamics/nucleR) performs Fourier transform filtering and peak calling to efficiently and accurately find the location of nucleosomes and classify them according to their fuzziness. 
-* [NucDyn](http://mmb.pcb.ub.es/gitlab/NuclDynamics/NucDyn) detects changes in nucleosome architectures between two MNase-seq experiments. It identifies nucleosomes’ insertions, evictions and shifts at the read level.
+* [nucleR](https://github.com/nucleosome-dynamics/nucleR) performs Fourier transform filtering and peak calling to efficiently and accurately find the location of nucleosomes and classify them according to their fuzziness. 
+* [NucDyn](https://github.com/nucleosome-dynamics/NucDyn) detects changes in nucleosome architectures between two MNase-seq experiments. It identifies nucleosomes’ insertions, evictions and shifts at the read level.
 
 'Nucleosome Dynamics' also offers other nucleosome-related analyses:
 * NFR: location of nucleosome-free regions
@@ -65,7 +65,7 @@ Additionally, after computing all the analyses, a series of statistics (plots an
 * genome-wide values for all calculations
 * counts and averages at the gene level
 
-'Nucleosome Dynamics CLI' is not only offered throught the native R interface, but a number of other implementation have been prepared in order to reach also non-R users. These implementations include two web-based platforms ([MuGVRE](http://mmb.pcb.ub.es/gitlab/NuclDynamics/nucleosome_dynamics_MuGVRE) and [Galaxy](http://mmb.pcb.ub.es/gitlab/NuclDynamics/galaxy)) and two containerized installations ([docker](http://mmb.pcb.ub.es/gitlab/NuclDynamics/docker) and [singularity](https://github.com/nucleosome-dynamics/nucleosome_dynamics_singularity))
+'Nucleosome Dynamics CLI' is not only offered throught the native R interface, but a number of other implementation have been prepared in order to reach also non-R users. These implementations include two web-based platforms ([MuGVRE](https://github.com/nucleosome-dynamics/nucleosome_dynamics_MuGVRE) and [Galaxy](https://github.com/nucleosome-dynamics/galaxy)) and two containerized installations ([docker](https://github.com/nucleosome-dynamics/docker) and [singularity](https://github.com/nucleosome-dynamics/nucleosome_dynamics_singularity))
 
 
 
