@@ -7,9 +7,9 @@ source(paste(SOURCE.DIR, "get_genes.R", sep="/"))
 
 ## Binary paths ###############################################################
 
-wig.dir <- paste(where(), "../wig_utils", sep="/")
-towig.bin <- paste(wig.dir, "bigWigToWig", sep="/")
-tobig.bin <- paste(wig.dir, "wigToBigWig", sep="/")
+wig.dir <- ""#paste(where(), "../wig_utils", sep="/")
+towig.bin <- paste(wig.dir, "bigWigToWig", sep="")
+tobig.bin <- paste(wig.dir, "wigToBigWig", sep="")
 
 ## Reading functions ##########################################################
 

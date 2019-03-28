@@ -41,10 +41,11 @@ for (x in paste0(SOURCE.DIR, "/", sourced, ".R")) {
 
 defaults <- list(mc.cores          = 1,
                  window            = 300,
-                 p1.max.merge      = 3,
+                 #p1.max.merge      = 3,
                  p1.max.downstream = 20,
-                 open_thresh       = 215,
-                 max.uncovered     = 150)
+                 open_thresh       = 215#,
+                 #max.uncovered     = 150
+                 )
 
 spec <- matrix(c("calls",             "a", 1, "character",
                  "genome",            "c", 1, "character",

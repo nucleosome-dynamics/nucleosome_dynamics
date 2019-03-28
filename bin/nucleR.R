@@ -40,15 +40,15 @@ defaults <- list(mc.cores            = 1,
                  type                = "paired",
                  fdrOverAmp          = 0.05,
                  components          = 1,
-                 fragmentLen         = NULL,
+                 fragmentLen         = 170, #NULL,
                  trim                = 50,
                  pcKeepComp          = 0.02,
-                 width               = 125,
+                 width               = 147,
                  threshold           = TRUE,
-                 thresholdPercentage = 0.35,
+                 thresholdPercentage = 35,
                  thresholdValue      = 10,
-                 dyad_length         = NULL,
-                 min.overlap         = NULL,
+                 dyad_length         = 50, #NULL
+                 min.overlap         = 80, #NULL
                  score_w.thresh      = 0.6,
                  score_h.thresh      = 0.4,
                  start               = NULL,
@@ -110,7 +110,7 @@ if (params$threshold) {
 } else {
     threshold <- params$thresholdValue
 }
-
+print(params)
 ## Pipeline Itself ############################################################
 
 message("loading data")

@@ -67,11 +67,11 @@ spec <- matrix(c("input1", "a", 1, "character",
 args <- getopt(spec)
 
 defaults <- list(cores      = 1,
-                 maxLen     = 170,
+                 maxLen     = 140,
                  equal_size = FALSE,
                  plotRData  = NULL,
                  readSize   = 140,
-                 maxDiff    = 74,
+                 maxDiff    = 70,
 
                  range      = "All",
 

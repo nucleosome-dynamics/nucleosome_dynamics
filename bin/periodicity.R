@@ -38,8 +38,8 @@ for (x in sourced) {
 ## Parameters and Arguments ###################################################
 
 defaults <- list(periodicity = 165,
-                 mc.cores    = 1,
-                 genome      = "R64-1-1") #unused
+                 mc.cores    = 1)#,
+                 #genome      = "R64-1-1") #unused
 
 spec <- matrix(c("calls",       "a", 1, "character",
                  "genes",       "b", 1, "character",

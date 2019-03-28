@@ -29,8 +29,9 @@ for (x in sourced) {
 ## Parameters and Arguments ###################################################
 
 # default parameters
-defaults <- list(min.width = 400,
-                 threshold = 110)
+
+defaults <- list(min.width = 110,
+                 threshold = 400)
 
 # parse arguments from the command line
 spec <- matrix(c("input",      "i", 1, "character",
