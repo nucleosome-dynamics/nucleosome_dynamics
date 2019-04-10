@@ -28,14 +28,12 @@ spec <- matrix(c("type",   "t", 1, "character",
                ncol=4)
 args <- getopt(spec)
 
-if(!file.exists(args[["output"]])){
-
+if(file.exists(args[["output"]]) && file.info(args[["output"]])$size != 0 ){
+   message("-- RData found\n")
+ }else{
    message("-- loading ", args[["input"]], "\n")
    reads <- loadBAM(args[["input"]], args[["type"]])
    
    message("-- saving ", args[["output"]], "\n")
    save(reads, file=args[["output"]])
-
-} else {
-   message("-- RData found\n")
 }
