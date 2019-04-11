@@ -77,6 +77,7 @@ calls.rd <- with(calls.df,
 message("calculating coverage")
 
 reads <- get(load(params$reads))
+reads <- keepSeqlevels(reads, seqlevelsInUse(reads))
 f.reads <- filterDuplReads(reads, fdrOverAmp=0.05, components=1)
 if (params$type == "single") {
     fragmentLen <- fragmentLenDetect(f.reads)

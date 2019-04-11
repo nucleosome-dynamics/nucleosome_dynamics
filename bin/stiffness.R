@@ -60,6 +60,8 @@ range <- parseRange(params$range)
 message("loading inputs")
 calls <- readGff(params[["calls"]])
 reads <- get(load(params[["reads"]]))
+reads <- keepSeqlevels(reads, seqlevelsInUse(reads))
+
 
 reads <- subsetReads(reads, range$chr, range$start, range$end)
 calls <- subsetCalls(calls, range$chr, range$start, range$end)

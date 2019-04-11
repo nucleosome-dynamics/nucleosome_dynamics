@@ -110,12 +110,13 @@ if (params$threshold) {
 } else {
     threshold <- params$thresholdValue
 }
-print(params)
+
 ## Pipeline Itself ############################################################
 
 message("loading data")
 reads <- get(load(params$input))
 #reads <- RangedData(reads$ranges, space  = droplevels(reads$space))
+reads <- keepSeqlevels(reads, seqlevelsInUse(reads))
 
 message("filtering duplicated reads")
 f.reads <- filterDuplReads(reads,
