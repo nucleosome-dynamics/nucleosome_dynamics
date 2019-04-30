@@ -18,7 +18,7 @@ This repository includes the set of R programs implementing 'Nucleosome Dynamics
 - [Input data](#Input_data)
 - [Running Nucleosome Dynamics CLI](#Running_Nucleosome_Dynamics_CLI)
     - [Example](#Example)
-- [Usage](Usage)
+- [Usage](#Usage)
     - [Analyses usage](#Analyses_usage)
         - [ReadBAM](#usage_readBAM)
         - [nucleR](#usage_nucleR)
