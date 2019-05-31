@@ -58,6 +58,7 @@ for (i in names(args)) {
 ## Pipeline Itself ############################################################
 
 reads <- get(load(params$input))
+reads <- keepSeqlevels(reads, seqlevelsInUse(reads))
 
 message("filtering duplicated reads")
 f.reads <- filterDuplReads(reads,
