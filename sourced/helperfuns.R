@@ -146,6 +146,12 @@ irLs2rd <- function(x)
                space=rep(names(x),
                          sapply(x, length)))
 
+irLs2gr <- function(x)
+    # Convert a list of IRanges to a RangedData
+    GRanges(rep(names(x), sapply(x, length)), 
+            IRanges(start(do.call(c, unname(x))),
+                    end(do.call(c, unname(x)))))
+
 #sortReads <- function (reads)
 #{   # Sort reads RangedData format. Sort them first by chromosome, then by
 #    # start and then by end
