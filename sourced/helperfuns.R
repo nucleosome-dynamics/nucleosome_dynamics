@@ -195,7 +195,7 @@ makeSubsetter <- function (getChr, getStart, getEnd)
 subsetCalls <- makeSubsetter(function (x) x$seqname,
                              function (x) x$start,
                              function (x) x$end)
-subsetReads <- makeSubsetter(space, start, end)
+subsetReads <- makeSubsetter(seqnames, start, end)
 
 ###############################################################################
 

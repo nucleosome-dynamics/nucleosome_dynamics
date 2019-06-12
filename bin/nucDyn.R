@@ -92,6 +92,8 @@ range <- parseRange(params$range)
 message("loading and subsetting reads")
 rs <- lapply(params[c("input1", "input2")], function(x) get(load(x)))
 rs <- lapply(rs, subsetReads, range$chr, range$start, range$end)
+keepChr <- intersect(seqlevelsInUse(rs[[1]]), seqlevelsInUse(rs[[2]]))
+rs <- lapply(rs, function(x) keepSeqlevels(x, keepChr, pruning.mode="coarse"))
 
 message("running NucleosomeDynamics")
 dyn <- nucleosomeDynamics(setA      = rs[[1]],
