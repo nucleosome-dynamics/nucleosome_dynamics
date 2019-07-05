@@ -58,7 +58,8 @@ for (i in names(args)) {
 conditions <- list(
     # compose(partial(`>`, params[["threshold"]]), width),
     # compose(partial(`<`, params[["min.width"]]), width)
-    function (x) width(x) > params[["min.width"]]
+    function (x) (width(x) > params[["min.width"]]) & 
+                 (width(x) < params[["threshold"]])
 )
 
 getInterRans <- function(r)
@@ -92,6 +93,8 @@ nfr <- rd2df(irLs2gr(lapply(
         linkers[sel]
     }
 )))
+nfr$seqname = nfr$seqnames
+nfr = nfr[ , (colnames(nfr) != "seqnames")]
 
 ## Store output ###############################################################
 
