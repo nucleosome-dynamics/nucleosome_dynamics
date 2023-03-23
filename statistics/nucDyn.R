@@ -3,7 +3,6 @@
 ## Imports ####################################################################
 
 suppressPackageStartupMessages(library(getopt))
-suppressPackageStartupMessages(library(htSeqTools))
 suppressPackageStartupMessages(library(nucleR))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))

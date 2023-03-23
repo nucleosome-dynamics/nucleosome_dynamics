@@ -9,7 +9,6 @@
 ## Imports ####################################################################
 
 suppressPackageStartupMessages(library(getopt))
-suppressPackageStartupMessages(library(htSeqTools))
 suppressPackageStartupMessages(library(nucleR))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
@@ -29,7 +28,7 @@ where <- function () {
 }
 
 SOURCE.DIR <- paste(where(), "../sourced", sep="/")
-sourced <- c("helperfuns", "gff_funs")
+sourced <- c("helperfuns", "gff_funs", "htseqtools_funs")
 for (x in sourced) {
     source(paste0(SOURCE.DIR, "/", x, ".R"))
 }
