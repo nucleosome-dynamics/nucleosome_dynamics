@@ -5,6 +5,7 @@
 suppressPackageStartupMessages(library(getopt))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
+suppressPackageStartupMessages(library(plyranges))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -40,18 +41,20 @@ params <- getopt(spec)
 ## Read genes #################################################################
 
 message("-- loading used genome")
-genes <- getGenes(params$genome)
+
+genes <- read_gff3(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
 genes$tts <- as.numeric(genes$tts)
 
-genes_gr <- GRanges(genes$chrom,
-                    IRanges(start=genes$start, end=genes$end),
+genes_gr <- GRanges(as.vector(seqnames(genes)),
+                    IRanges(start=start(genes), end=end(genes)),
                     name=genes$name)
 
 ## Statistics per gene ########################################################
 
 message("-- computing statistics per gene")
+
 nuc <- readGff(params$input)
 
 nuc_gr <- GRanges(nuc$seqname,
@@ -74,12 +77,12 @@ cols <- c("name",
           "TotalUncertain")
 genes_out = genes[, cols]
 
-cols <- c("Name",
-          "Total Nucleosomes",
-          "Total Well-Positioned",
-          "Total Fuzzy",
-          "Total Uncertain")
-genes_out = rbind(cols, genes_out)
+# cols <- c("Name",
+#           "Total Nucleosomes",
+#           "Total Well-Positioned",
+#           "Total Fuzzy",
+#           "Total Uncertain")
+# genes_out = rbind(cols, genes_out)
 
 write.table(genes_out,
             params$out_genes,

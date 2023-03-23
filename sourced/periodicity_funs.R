@@ -4,6 +4,7 @@
 
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(parallel))
+suppressPackageStartupMessages(library(plyranges))
 
 source(paste(SOURCE.DIR,
              "helperfuns.R",
@@ -34,17 +35,17 @@ ecov <- function (x, period)
     (1 + sin(pi/2 + 2*pi/period*x)) * 0.8^(abs(x)/period)
 
 # Create a coverage for a gene given p1.pos and last.pos and their periodicity
-coverageChr <- function(nuc.start, nuc.end, nuc.length, strand, L, period)
+coverageChr <- function(nuc.start, nuc.end, nuc.length, strand, L, period, seqname)
 {
     revIt <- function(xs)
         rev(xs) * (-1)
-
+    
     cov <- rep(0, L)
-
+    
     for (i in seq_along(nuc.start)) {
         sper <- floor(period/2)
         xs <- (-sper):(period*floor(nuc.length[i]/period) + sper)
-
+        
         if (strand[i] == "+") {
             a <- xs
             b <- revIt(xs)
@@ -52,10 +53,13 @@ coverageChr <- function(nuc.start, nuc.end, nuc.length, strand, L, period)
             a <- revIt(xs)
             b <- xs
         }
-
+        
         x <- nuc.start[i] + a
         y <- nuc.end[i] + b
-
+        
+        a <- a[x>0]
+        x <- x[x>0]
+        
         cov[round(x)] <- cov[round(x)] + ecov(a, period)
         cov[round(y)] <- cov[round(y)] + ecov(b, period)
     }
@@ -66,17 +70,19 @@ findGenesNucs <- function (genes, calls, mc.cores=1)
 {
     genes$tss <- as.numeric(genes$tss)
     genes$tts <- as.numeric(genes$tts)
-    genes$start <- mapply(min, genes$tss, genes$tts)
-    genes$end <- mapply(max, genes$tss, genes$tts)
-
-    chroms <- unique(genes$chrom)
+    start(genes) <- mapply(min, genes$tss, genes$tts)
+    end(genes) <- mapply(max, genes$tss, genes$tts)
+    
+    chroms <- unique(as.vector(seqnames(genes)))
     genes.by.chr <- lapply(chroms,
-                           function (chr) subset(genes, chrom == chr))
+                           function (chr) as.data.frame(filter(genes, seqnames == chr)))
     names(genes.by.chr) <- chroms
-    dyads.by.chr <- lapply(ranges(calls), dyadPos)
-
+    calls$dyad <- (start(ranges(calls)) + end(ranges(calls)))/2
+    dyads.by.chr <- split(calls$dyad, seqnames(calls))
+    
     used.cols <- c("name", "start", "end", "strand")
-
+    
+    
     genes.nucs <- do.call(rbind, xlapply(
         chroms,
         function(chr) {
@@ -89,23 +95,24 @@ findGenesNucs <- function (genes, calls, mc.cores=1)
         },
         mc.cores=mc.cores
     ))
-
+    
     genes.nucs$nuc.length <- abs(genes.nucs$last - genes.nucs$first)
-
+    
     genes.nucs
 }
+
 
 getPeriodCov <- function (genes.nucs, period, mc.cores=1)
 {
     chroms <- unique(genes.nucs$chrom)
-
+    
     chr.lens <- sapply(
         chroms,
         function(chr)
             max(genes.nucs[genes.nucs$chrom == chr, "end"]) + 500
     )
     names(chr.lens) <- chroms
-
+    
     cov <- xlapply(
         chroms,
         function (chr)
@@ -117,12 +124,15 @@ getPeriodCov <- function (genes.nucs, period, mc.cores=1)
                                                      "nuc.length",
                                                      "strand")))),
                       chr.lens[[chr]] + 500,
-                      period)),
+                      period,
+                      chr)),
         mc.cores=mc.cores
     )
     names(cov) <- chroms
     cov
 }
+
+
 
 ###############################################################################
 

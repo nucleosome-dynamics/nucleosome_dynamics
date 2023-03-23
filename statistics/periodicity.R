@@ -6,6 +6,7 @@
 suppressPackageStartupMessages(library(getopt))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
+suppressPackageStartupMessages(library(plyranges))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -40,7 +41,7 @@ params <- getopt(spec)
 ## Read genes #################################################################
 
 message("-- loading used genome")
-genes <- getGenes(params$genome)
+genes <- read_gff3(params$genome) %>% as.data.frame()
 
 genes$tss <- as.numeric(genes$tss)
 genes$tts <- as.numeric(genes$tts)
@@ -57,7 +58,7 @@ genes_out = merge(genes[, c("name", "tss")],
                   by.x="name",
                   by.y="id",
                   all.x=TRUE)
-genes_out = genes_out[, c(1, 3, 4)]
+genes_out = genes_out[, c("name", "score_phase", "score_autocorrelation")]
 names <- c("Name", "Score phase", "Score autocorrelation")
 genes_out = rbind(names, genes_out)
 

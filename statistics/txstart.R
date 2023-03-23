@@ -7,6 +7,7 @@ suppressPackageStartupMessages(library(getopt))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
 suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(plyranges))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -43,7 +44,7 @@ params <- getopt(spec)
 ## Read genes #################################################################
 
 message("-- loading used genome")
-genes <- getGenes(params$genome)
+genes <- read_gff3(params$genome) %>% as.data.frame()
 
 genes$tss <- as.numeric(genes$tss)
 genes$tts <- as.numeric(genes$tts)

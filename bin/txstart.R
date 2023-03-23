@@ -16,6 +16,8 @@ suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
 suppressPackageStartupMessages(library(htSeqTools))
 suppressPackageStartupMessages(library(nucleR))
+suppressPackageStartupMessages(library(plyranges))
+suppressPackageStartupMessages(library(parallel))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -70,32 +72,25 @@ for (i in names(args)) {
 ## Some function declarations #################################################
 
 message("-- loading inputs")
-nucs <- with(readGff(params$calls),
-             RangedData(ranges  = IRanges(start = as.numeric(start),
-                                          end   = as.numeric(end)),
-                        space   = as.character(seqname),
-                        score   = as.numeric(score),
-                        score_w = as.numeric(score_width),
-                        score_h = as.numeric(score_height),
-                        #nmerge  = as.numeric(nmerge),
-                        class   = as.character(class)))
+nucs <- read_gff3(params$calls)
 
 ## Read input #################################################################
 
 message("-- loading used genome")
-genes <- getGenes(params$genome)
+genes <- read_gff3(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
 genes$tts <- as.numeric(genes$tts)
 
 ## Do it ######################################################################
 
+
 message("-- checking the classes")
 tx.classes <- with(params,
                    patternsByChrDF(calls             = nucs,
-                                   df                = genes,
+                                   df                = as.data.frame(genes),
                                    col.id            = "name",
-                                   col.chrom         = "chrom",
+                                   col.chrom         = "seqnames",
                                    col.pos           = "tss",
                                    col.strand        = "strand",
                                    window            = window,
