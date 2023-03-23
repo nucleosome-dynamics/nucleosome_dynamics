@@ -3,6 +3,10 @@
 ## Imports ####################################################################
 
 suppressPackageStartupMessages(library(IRanges))
+suppressPackageStartupMessages(library(plyranges))
+suppressPackageStartupMessages(library(purrr))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(readr))
 source(paste(SOURCE.DIR, "get_genes.R", sep="/"))
 
 ## Binary paths ###############################################################
@@ -117,6 +121,40 @@ writeBigWig <- function (x, outf, chrom.sizes.f)
     system2(tobig.bin, shQuote(c(wigf, chrom.sizes.f, outf)))
     file.remove(wigf)
     invisible()
+}
+# This function takes a list of vectors (x) representing signal scores across genomic regions and writes the data to a bigWig file format
+# Additionally it uses a file path to write the resulting bigWig file (outf),
+# and a file path to a file with chromosome sizes in tab seperated form (chrom.sizes.f)
+writeBigWig_updated <- function (x, outf, chrom.sizes.f) {
+  
+  # Map over the input vectors to create a tibble for each vector with four columns:
+  # score, start position, width, and strand (* indicates unstranded).
+  # Combine all tibbles into a single data frame using map_df().
+  # Use .id = "seqnames" to create a new column seqnames, which contains the names of the vectors in x.
+  gr <- purrr::map_df(x,
+                      function(y) 
+                      {dplyr::tibble(score = y,
+                                     start = 1:length(y),
+                                     width = 1,
+                                     strand = "*")},
+                      .id = "seqnames") %>% 
+    as_granges()
+  
+  # Read in a file containing chromosome sizes into a data frame.
+  # The file is assumed to have two columns separated by tabs: chromosome name and size.
+  chrSizes <- readr::read_delim(chrom.sizes.f,
+                                col_names = c("seqnames","size"),
+                                delim = "\t",
+                                show_col_types = FALSE)
+  
+  # Filter the chromosome sizes data frame to include only the chromosomes that are present in the granges object.
+  chrSizes <- filter(chrSizes, seqnames %in% seqnames(gr)) 
+  
+  # Set the sequence lengths of the granges object to the chromosome sizes in chrSizes.
+  seqlengths(gr) <- chrSizes$size
+  
+  # Write the granges object to a bigWig file at the specified output path.
+  write_bigwig(gr, outf)
 }
 
 ###############################################################################

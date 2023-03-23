@@ -13,6 +13,7 @@ suppressPackageStartupMessages(library(NucDyn))
 suppressPackageStartupMessages(library(plyr))
 suppressPackageStartupMessages(library(parallel))
 
+
 where <- function () {
     spath <- parent.frame(2)$ofile
 
@@ -126,14 +127,12 @@ hs <- findHotspots(dyn=dyn, nuc=nuc, mc.cores=params$cores ,
 
 ## Calculate vector of -log10(p-value)s  ######################################
 message("calculate p-val")
-
 cov1 <- lapply(coverage(as(rs[[1]], "GRanges")), as.vector)
 cov2 <- lapply(coverage(as(rs[[2]], "GRanges")), as.vector)
 
 chrs <- intersect(names(cov1), names(cov2))
 pvals <- lapply(chrs, function (x) -log10(findPVals(cov1[[x]], cov2[[x]])))
 names(pvals) <- chrs
-
 
 ## Store the Result ###########################################################
 
@@ -148,9 +147,14 @@ writeGff(df2gff(hs,
          params$outputGff)
 
 message("saving bigWig output")
-writeBigWig(lapply(pvals, splitAtZeros),
-            params$outputBigWig,
-            params$genome)
+
+writeBigWig_updated(pvals,
+                    params$outputBigWig,
+                    params$genome)
+
+# writeBigWig(lapply(pvals, splitAtZeros),
+#             params$outputBigWig,
+#             params$genome)
 
 message("done")
 

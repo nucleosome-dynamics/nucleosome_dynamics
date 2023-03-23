@@ -114,7 +114,10 @@ gff <- df2gff(genes.nucs,
 writeGff(gff, params$gffOutput)
 
 message("writing bigWig output")
-splited <- lapply(covPredAll, splitAtZeros)
-writeBigWig(splited, params$bwOutput, params$chrom_sizes)
+# splited <- lapply(covPredAll, splitAtZeros)
+# writeBigWig(splited, params$bwOutput, params$chrom_sizes)
+writeBigWig_updated(covPredAll,
+                    params$bwOutput,
+                    params$chrom_sizes)
 
 ##############################################################################
