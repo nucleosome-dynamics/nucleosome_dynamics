@@ -3,11 +3,11 @@
 ## Imports ####################################################################
 
 suppressPackageStartupMessages(library(getopt))
-suppressPackageStartupMessages(library(htSeqTools))
 suppressPackageStartupMessages(library(nucleR))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
 suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(plyranges))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -43,13 +43,13 @@ params <- getopt(spec)
 ## Read genes #################################################################
 
 message("-- loading used genome")
-genes <- getGenes(params$genome)
+genes <- read_gff3(params$genome)
 
 genes$tss <- as.numeric(genes$tss)
 genes$tts <- as.numeric(genes$tts)
 
-genes_gr <- GRanges(genes$chrom,
-                    IRanges(start=genes$start, end=genes$end),
+genes_gr <- GRanges(as.vector(seqnames(genes)),
+                    IRanges(start=start(genes), end=end(genes)),
                     name=genes$name)
 
 ## Statistics per gene ########################################################
@@ -80,7 +80,7 @@ i <- c("name",
        "nEvic",
        "nShift_p",
        "nShift_m")
-stat_nd <- genes[, i]
+stat_nd <- as.data.frame(genes)[, i]
 
 stat_nd <- rbind(c("Name",
                    "Inclusions",

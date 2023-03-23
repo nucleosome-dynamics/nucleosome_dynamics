@@ -13,6 +13,7 @@ suppressPackageStartupMessages(library(htSeqTools))
 suppressPackageStartupMessages(library(nucleR))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
+suppressPackageStartupMessages(library(parallel))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -115,7 +116,6 @@ if (params$threshold) {
 
 message("loading data")
 reads <- get(load(params$input))
-#reads <- RangedData(reads$ranges, space  = droplevels(reads$space))
 reads <- keepSeqlevels(reads, seqlevelsInUse(reads))
 
 message("filtering duplicated reads")

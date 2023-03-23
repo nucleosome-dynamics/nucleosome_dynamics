@@ -64,15 +64,15 @@ checkPos <- function (nuc.pos, pos, window)
 ###############################################################################
 # Top level wrapper ###########################################################
 
-patternsByChrDF <- function (calls, df, col.id="name", col.chrom="chrom",
+patternsByChrDF <- function (calls, df, col.id="name", col.chrom="seqnames",
                              col.pos="pos", col.strand="strand", ...,
                              mc.cores=1)
 {   # Works by first splitting by chromosomes to save some redundant subsetting
     iterFun <- function (chr.genes) {
         chrom <- chr.genes[1, col.chrom]
         message(chrom)
-        chr.nucs <- calls[space(calls) == chrom, ]
-        if (nrow(chr.nucs) == 0) {
+        chr.nucs <- calls[seqnames(calls) == chrom, ]
+        if (length(chr.nucs) == 0) {
             emptyChrom(df         = chr.genes,
                        chrom      = chrom,
                        col.id     = col.id,
@@ -93,8 +93,10 @@ patternsByChrDF <- function (calls, df, col.id="name", col.chrom="chrom",
     ddply(df, col.chrom, iterFun)
 }
 
+
 ###############################################################################
 # Lower level wrappers ########################################################
+
 
 nucleosomePatternsDF <- function (calls, df, col.id="name", col.pos="pos",
                                   col.strand="strand", ..., mc.cores=1)
@@ -117,6 +119,7 @@ nucleosomePatternsDF <- function (calls, df, col.id="name", col.pos="pos",
                      mc.cores=mc.cores))
 }
 
+
 emptyChrom <- function (df, chrom, col.id="name", col.pos="pos",
                         col.strand="strand")
     # Return entries filled with NAs for chromosomes with no nucleosomes found
@@ -134,6 +137,7 @@ emptyChrom <- function (df, chrom, col.id="name", col.pos="pos",
 ###############################################################################
 # Function that does the actual work ##########################################
 
+
 nucleosomePatterns <- function (calls, id, pos, strand="+", window=300,
                                 p1.max.merge=3, p1.max.downstream=20,
                                 open.thresh=215, max.uncovered=150,
@@ -142,29 +146,29 @@ nucleosomePatterns <- function (calls, id, pos, strand="+", window=300,
     # those positions will also be the p1 and m1 positions if they are within
     # a -/+ window
     p1 <- detectNuc(calls, pos, p1.max.downstream, strand, "p1", position)
-
-    no.p1s <- nrow(p1) == 0  # no nucleosome found upstream of the TSS
+    
+    no.p1s <- length(p1) == 0  # no nucleosome found upstream of the TSS
     if (no.p1s) {
         p1.pos <- pos
     } else {
         p1.pos <- .mid(p1)
     }
-
+    
     if (!no.p1s && checkPos(p1.pos, pos, window)) {
         # there's a nucleosome upstream and within the window
         p1.nuc <- .mid(p1)
         p1.class <- p1$class
-
+        
         # look for m1 relative to p1
         m1 <- detectNuc(calls, p1.nuc, 0, strand, "m1", position)
-
-        no.m1s <- nrow(m1) == 0
+        
+        no.m1s <- length(m1) == 0
         if (no.m1s) {
             m1.pos <- pos
         } else {
             m1.pos <- .mid(m1)
         }
-
+        
         if (!no.m1s && checkPos(m1.pos, pos, window)) {
             # and there's also one downstream
             m1.class <- m1$class
@@ -178,17 +182,17 @@ nucleosomePatterns <- function (calls, id, pos, strand="+", window=300,
         m1.nuc <- NA
         p1.class <- NULL
         m1.class <- NULL
-
+        
         # no p1... so look for m1 relative to the TSS
         m1.pos <- .mid(detectNuc(calls, pos, 0, strand, "m1", position))
         if (length(m1.pos) == 0) {
             m1.pos <- pos
         }
     }
-
+    
     dist <- abs(p1.nuc - m1.nuc)
     descr <- getDescr(dist, m1.class, p1.class, open.thresh)
-
+    
     data.frame(id=id,
                strand=strand,
                pos=pos,
@@ -199,3 +203,4 @@ nucleosomePatterns <- function (calls, id, pos, strand="+", window=300,
                start=min(m1.pos, p1.pos),
                end=max(m1.pos, p1.pos))
 }
+

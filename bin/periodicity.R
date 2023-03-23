@@ -13,6 +13,7 @@ suppressPackageStartupMessages(library(getopt))
 suppressPackageStartupMessages(library(plyr))
 suppressPackageStartupMessages(library(nucleR))
 suppressPackageStartupMessages(library(htSeqTools))
+suppressPackageStartupMessages(library(plyranges))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -64,13 +65,12 @@ for (i in names(args)) {
 ## Some function definitions ##################################################
 
 message("loading genes")
-genes <- getGenes(params$genes)
+
+genes <- read_gff3(params$genes)
 message("reading calls")
+
 calls.df <- readGff(params$calls)
-calls.rd <- with(calls.df,
-                 RangedData(space=seqname,
-                            range=IRanges(start=start,
-                                          end=end)))
+names(calls.df)[1] <- "seqnames"
 
 ## Do it ######################################################################
 
@@ -92,7 +92,8 @@ prep <- processReads(f.reads,
 cov <- coverage.rpm(prep)
 
 message("identifying first and last nucleosomes")
-genes.nucs <- findGenesNucs(genes, calls.rd, params$mc.cores)
+
+genes.nucs <- findGenesNucs(genes, as_granges(calls.df), params$mc.cores)
 genes.nucs$dfi <- getDfi(genes.nucs$nuc.len, params$periodicity)
 genes.nucs$autocor <- autocorFromDf(genes.nucs, cov, params$periodicity)
 
