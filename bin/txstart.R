@@ -14,7 +14,6 @@
 suppressPackageStartupMessages(library(getopt))
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(GenomicRanges))
-suppressPackageStartupMessages(library(htSeqTools))
 suppressPackageStartupMessages(library(nucleR))
 
 where <- function () {
@@ -32,7 +31,7 @@ where <- function () {
 }
 
 SOURCE.DIR <- paste(where(), "../sourced", sep="/")
-sourced <- c("helperfuns", "nucleosome_patterns", "get_genes", "gff_funs")
+sourced <- c("helperfuns", "nucleosome_patterns", "get_genes", "gff_funs","htseqtools_funs")
 for (x in paste0(SOURCE.DIR, "/", sourced, ".R")) {
     source(x)
 }

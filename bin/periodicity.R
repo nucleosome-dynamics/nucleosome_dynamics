@@ -12,7 +12,6 @@ suppressPackageStartupMessages(library(parallel))
 suppressPackageStartupMessages(library(getopt))
 suppressPackageStartupMessages(library(plyr))
 suppressPackageStartupMessages(library(nucleR))
-suppressPackageStartupMessages(library(htSeqTools))
 
 where <- function () {
     spath <-parent.frame(2)$ofile
@@ -30,7 +29,7 @@ where <- function () {
 
 SOURCE.DIR <- paste(where(), "../sourced", sep="/")
 sourced <- c("helperfuns", "wig_funs", "get_genes", "periodicity_funs",
-             "gff_funs")
+             "gff_funs", "htseqtools_funs")
 for (x in sourced) {
     source(paste0(SOURCE.DIR, "/", x, ".R"))
 }
