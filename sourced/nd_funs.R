@@ -4,11 +4,11 @@
 
 suppressPackageStartupMessages(library(IRanges))
 suppressPackageStartupMessages(library(nucleR))
-suppressPackageStartupMessages(library(htSeqTools))
 
-source(paste(SOURCE.DIR,
-             "fp.R",
-             sep="/"))
+sourced <- c("fp", "htseqtools_funs")
+for (x in sourced) {
+    source(paste0(SOURCE.DIR, "/", x, ".R"))
+}
 
 ###############################################################################
 
